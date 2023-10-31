@@ -1,0 +1,90 @@
+.dashboard {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.dashboard > .welcomeMsg {
+    font-size: 22px;
+    margin: 20px 0;
+}
+
+.dashboard > .welcomeMsg > span{
+    font-weight: bold;
+}
+
+.dashboard > .totalWalletBalanceContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(0,0,0, 0.05);
+    padding: 25px;
+    
+}
+
+.dashboard > .totalWalletBalanceContainer > .actions {
+    display: flex;
+    gap: 40px; 
+    margin-top: 20px;
+}
+
+.dashboard > .totalWalletBalanceContainer > .actions > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.dashboard > .totalWalletBalanceContainer > .actions > div > p {
+    margin: 0;
+}
+
+.dashboard > .totalWalletBalanceContainer > .totWalletLabel {
+    font-size: 14px;
+    margin: 0;
+}
+
+.dashboard > .totalWalletBalanceContainer > .totWalletValue {
+    font-size: 45px;
+    margin: 0;
+}
+
+.dashboard > .totalWalletBalanceContainer > .totWalletValue > span {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.dashboard > .subWalletSection {
+
+}
+
+.dashboard > .subWalletSection > .subWalletLabel {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 60px;
+}
+
+.dashboard > .subWalletSection > .subWalletLayout {
+    display: flex;
+    gap: 40px;
+}
+
+.dashboard > .subWalletSection > .subWalletLayout >.subWalletContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(0,0,0, 0.05);
+    flex: 1;
+    padding: 25px;
+}
+
+.dashboard > .subWalletSection > .subWalletLayout >.subWalletContainer > .subWalletTag {
+    font-size: 15px;
+}
+
+.dashboard > .subWalletSection > .subWalletLayout >.subWalletContainer > .subWalletValue {
+    font-size: 30px;
+    margin: 0;
+}
+
+.dashboard > .subWalletSection > .subWalletLayout >.subWalletContainer > .subWalletValue > span {
+    font-size: 14px;
+}

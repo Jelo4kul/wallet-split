@@ -1,0 +1,79 @@
+.miscellaneous {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    height: 100%;
+}
+
+.miscellaneous > .title {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 20px 0;
+    margin-bottom: 5px;
+}
+
+.miscellaneous > .miscBalanceContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(0,0,0, 0.05);
+    padding: 25px;
+    margin-top: 12px;
+    
+}
+
+.miscellaneous > .miscBalanceContainer > .actions {
+    display: flex;
+    gap: 40px; 
+    margin-top: 20px;
+}
+
+.miscellaneous > .miscBalanceContainer > .actions > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.miscellaneous > .miscBalanceContainer > .actions > div > p {
+    margin: 0;
+}
+
+.miscellaneous > .miscBalanceContainer > .miscWalletLabel {
+    font-size: 14px;
+    margin: 0;
+}
+
+.miscellaneous > .miscBalanceContainer > .miscWalletValue {
+    font-size: 45px;
+    margin: 0;
+}
+
+.miscellaneous > .miscBalanceContainer > .miscWalletValue > span {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.miscellaneous > .transacSec {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    height: 100%;
+}
+
+.miscellaneous > .transacSec > .recTransacLabel {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.miscellaneous > .transacSec > .trasancImageBox {
+    justify-self: center;
+    align-self: center;
+    padding-top: 30px;
+}
+
+.miscellaneous > .transacSec > .trasancImageBox p {
+    text-align: center;
+}
+.miscellaneous > .transacSec > .trasancImageBox > .transacImage {
+ 
+}

@@ -1,0 +1,40 @@
+.layout {
+    display: flex;
+    width: 100%;
+    gap: 40px;
+    height: 100%;
+}
+
+.layout > .left {
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+    padding-top: 100px;
+}
+
+.layout > .left > .verticalNav {
+    display: flex;
+    flex-direction: column;
+}
+
+.layout > .left > .verticalNav > ul {  
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    list-style: none;
+    padding: 0;
+}
+
+.layout > .left > .verticalNav > ul > li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.layout .NavMenu{
+   color: black;
+}
+
+.layout > .right {
+    width: 85%;
+}

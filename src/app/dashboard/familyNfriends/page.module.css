@@ -1,0 +1,79 @@
+.fnf {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    height: 100%;
+}
+
+.fnf > .title {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 20px 0;
+    margin-bottom: 5px;
+}
+
+.fnf > .fnfBalanceContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(0,0,0, 0.05);
+    padding: 25px;
+    margin-top: 12px;
+    
+}
+
+.fnf > .fnfBalanceContainer > .actions {
+    display: flex;
+    gap: 40px; 
+    margin-top: 20px;
+}
+
+.fnf > .fnfBalanceContainer > .actions > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.fnf > .fnfBalanceContainer > .actions > div > p {
+    margin: 0;
+}
+
+.fnf > .fnfBalanceContainer > .fnfWalletLabel {
+    font-size: 14px;
+    margin: 0;
+}
+
+.fnf > .fnfBalanceContainer > .fnfWalletValue {
+    font-size: 45px;
+    margin: 0;
+}
+
+.fnf > .fnfBalanceContainer > .fnfWalletValue > span {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.fnf > .transacSec {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    height: 100%;
+}
+
+.fnf > .transacSec > .recTransacLabel {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.fnf > .transacSec > .trasancImageBox {
+    justify-self: center;
+    align-self: center;
+    padding-top: 30px;
+}
+
+.fnf > .transacSec > .trasancImageBox p {
+    text-align: center;
+}
+.fnf > .transacSec > .trasancImageBox > .transacImage {
+ 
+}

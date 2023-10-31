@@ -1,0 +1,208 @@
+.walletSplit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    padding-bottom: 40px;
+}
+
+.top  {
+    display: flex;
+    background-color: black;
+    width: 50%;
+    color: white;
+    gap: 40px;
+    padding: 0 40px;
+}
+
+.top > .top_left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0;
+}
+
+.top > .top_left > .walletAddressAndIcon {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    align-self: center;
+    justify-self: center;
+}
+
+.top > .top_left > .walletAddressAndIcon > .copyIcon {
+    cursor: pointer;
+}
+
+.top > .top_left > .walletAddressAndIcon  > .walletAddress {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.top > .top_left > .walletAddressLabel {
+  justify-self: last baseline;
+  margin: 0;
+}
+
+.top > .top_divider {
+
+    align-self: center;
+    height: 50%;
+    width: 1px;
+    background-color: white;
+}
+
+.top > .top_right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.top > .top_right > .walletValue {
+    margin: 0;
+    font-size: 50pt;
+}
+
+.top > .top_right > .walletValue > span {
+   
+    font-size: 20px;
+}
+
+.bottom {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    width: 50%;
+    border:  0.2px solid rgb(189, 189, 189);
+    padding: 60px 40px;
+    box-shadow: 2px 13px 50px 3px rgba(0,0,0,0.03) inset;
+    -webkit-box-shadow: 2px 13px 50px 3px rgba(0,0,0,0.03) inset;
+    -moz-box-shadow: 2px 13px 50px 3px rgba(0,0,0,0.03) inset;
+    background-color: white;
+}
+
+.bottom > .allocForm {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 70%;
+}
+
+
+.bottom > .allocForm > .fnfMainContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.bottom > .allocForm > .fnfMainContainer > p {
+    
+}
+
+.bottom > .allocForm > .fnfMainContainer > .fnfSubContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    border:  0.2px solid rgb(189, 189, 189);
+}
+
+.bottom > .allocForm > .fnfMainContainer > .fnfSubContainer >.addContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: rgb(126, 126, 226);
+    margin-top: 16px;
+}
+
+.bottom > .allocForm > .fnfMainContainer > .fnfSubContainer >.addContainer p, .addIcon {
+    cursor: pointer;
+    margin: 0;
+} 
+
+.bottom > .allocForm > .fnfMainContainer > .fnfSubContainer textarea  {
+    border:  0.2px solid rgb(189, 189, 189);
+    font-family: 'Raleway', sans-serif;
+    color: black;
+    padding: 10px;
+    line-height:25px;
+    font-size: 20px;
+    font-weight: 400;
+    margin-top: 16px;
+}
+.bottom > .allocForm > .fnfMainContainer > .fnfSubContainer textarea::placeholder {
+    font-weight: 300;
+    font-size: 16px;
+}
+
+.bottom  .labelAndInput {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.bottom .labelAndInput > input {
+    height: 50px;
+    border:  0.2px solid rgb(189, 189, 189);
+    font-size: 20px;
+    font-weight: 400;
+    padding: 0 14px;
+}
+
+.bottom  button{
+    background-color: black;
+    color: white;
+    padding: 19px;
+    border: none;
+    width: 162px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.bottom > .allocForm > button {
+   width: 100%;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    z-index: 2;
+}
+
+.overlay > .modal {
+    display: flex;
+    flex-direction: column;
+  
+    background-color: white;
+    width: 500px;
+    height: 200px;
+    z-index: 4;
+    padding: 20px;
+}
+
+.overlay > .modal > .closeModal {
+    justify-self: flex-end;
+    align-self: flex-end;
+    cursor: pointer;
+}
+
+.overlay > .modal > .sendEthLabel {
+    align-self: center;
+}
+
+.overlay > .modal  > .addressAndIcon {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    align-self: center;
+}

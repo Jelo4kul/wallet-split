@@ -1,0 +1,79 @@
+.nfts {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    height: 100%;
+}
+
+.nfts > .title {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 20px 0;
+    margin-bottom: 5px;
+}
+
+.nfts > .nftBalanceContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(0,0,0, 0.05);
+    padding: 25px;
+    margin-top: 12px;
+    
+}
+
+.nfts > .nftBalanceContainer > .actions {
+    display: flex;
+    gap: 40px; 
+    margin-top: 20px;
+}
+
+.nfts > .nftBalanceContainer > .actions > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.nfts > .nftBalanceContainer > .actions > div > p {
+    margin: 0;
+}
+
+.nfts > .nftBalanceContainer > .nftWalletLabel {
+    font-size: 14px;
+    margin: 0;
+}
+
+.nfts > .nftBalanceContainer > .nftWalletValue {
+    font-size: 45px;
+    margin: 0;
+}
+
+.nfts > .nftBalanceContainer > .nftWalletValue > span {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.nfts > .transacSec {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    height: 100%;
+}
+
+.nfts > .transacSec > .recTransacLabel {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.nfts > .transacSec > .trasancImageBox {
+    justify-self: center;
+    align-self: center;
+    padding-top: 30px;
+}
+
+.nfts > .transacSec > .trasancImageBox p {
+    text-align: center;
+}
+.nfts > .transacSec > .trasancImageBox > .transacImage {
+ 
+}
