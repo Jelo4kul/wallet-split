@@ -244,7 +244,7 @@ const WalletSplit = () => {
                         height={200}
                         alt="Split wallet"
                     />
-                    <p>Now that you have funded your wallet, it's time to split</p>
+                    <p>Now that you have funded your wallet, it is time to split</p>
                     <button onClick={handleSplitClicked}>Split Wallet</button>
                 </>
             )}
