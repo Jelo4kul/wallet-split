@@ -1,15 +1,21 @@
+'use client';
 import Image from 'next/image';
 import React from 'react';
 import styles from './page.module.css';
+import { useContainer } from 'unstated-next';
+import Global from '@/state/global';
 
 const NFTs = () => {
+
+  const { allocations, setAllocationData } = useContainer(Global);
+
   return (
     <div className={styles.nfts}>
         <p className={styles.title}>NFTs</p>
         <p>Purchase NFTs from Opensea from your NFT balance</p>
         <section className={styles.nftBalanceContainer}>
             <p className={styles.nftWalletLabel}>NFT Balance</p>
-            <p className={styles.nftWalletValue}>0<span>ETH</span></p>
+            <p className={styles.nftWalletValue}>{allocations.nfts}<span>ETH</span></p>
             <div className={styles.actions}>
                 <div>
                     <Image 

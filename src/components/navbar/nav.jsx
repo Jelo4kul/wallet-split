@@ -3,17 +3,18 @@ import React from 'react';
 import Link from 'next/link';
 import styles from './nav.module.css';
 import { usePathname } from 'next/navigation';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 const NavBar = () => {
 
   const pathname = usePathname();
 
   const paths = {
-    "/": "Get Started",
-    "/createWallet": "Create Wallet"
+    "/":  <button>Get Started</button>,
+    "/createWallet": <button>Create Wallet</button>
   }
 
-  const btnText = paths[pathname] ?? "Connect Wallet"
+  const btnText = paths[pathname] ?? <ConnectButton />
 
   return (
     <nav className={styles.NavBar}>
@@ -22,7 +23,7 @@ const NavBar = () => {
             <p>How it works</p>
         </div>
         <div className={styles.auth}>
-            <button>{btnText}</button>
+            {btnText}
         </div>
     </nav>
   )

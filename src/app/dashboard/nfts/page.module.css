@@ -51,6 +51,7 @@
 .nfts > .nftBalanceContainer > .nftWalletValue > span {
     font-size: 15px;
     font-weight: bold;
+    margin-left: 3px;
 }
 
 .nfts > .transacSec {

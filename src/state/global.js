@@ -1,25 +1,40 @@
 import { createContainer } from 'unstated-next';
 import { useState } from 'react';
-function useAddress() {
-    const [address, setSmartWalletAddress] = useState('');
-    const [owner, setOwner] = useState(null);
-    const [ecdsaProvider, setEcdsaProvider] = useState(null);
+function useData() {
+    // const [address, setSmartWalletAddress] = useState('');
+    // const [owner, setOwner] = useState(null);
+    // const [ecdsaProvider, setEcdsaProvider] = useState(null);
+    const [allocations, setAllocations] = useState({
+        fnf: '',
+        miscellaneous: '',
+        nfts: '',
+        fnfAddresses: []
+    })
 
-    const setAddress = (_addr) => {
-        setSmartWalletAddress(_addr);
+    const setAllocationData = (_allocData) => {
+        setAllocations(
+            {
+                ...allocations,
+                ..._allocData
+            }
+        )
     };
 
-    const setOwnerObject = (_owner) => {
-        setOwner(_owner);
-    }
+    // const setAddress = (_addr) => {
+    //     setSmartWalletAddress(_addr);
+    // };
 
-    const setEcdsaProviderObj = (_provider) => {
-        setEcdsaProvider(_provider);
-    }
+    // const setOwnerObject = (_owner) => {
+    //     setOwner(_owner);
+    // }
 
-    return { address, setAddress, owner, setOwnerObject, ecdsaProvider, setEcdsaProviderObj };
+    // const setEcdsaProviderObj = (_provider) => {
+    //     setEcdsaProvider(_provider);
+    // }
+
+    return { allocations, setAllocationData };
 }
 
-const Global = createContainer(useAddress);
+const Global = createContainer(useData);
 
 export default Global;

@@ -16,7 +16,7 @@
 .dashboard > .totalWalletBalanceContainer {
     display: flex;
     flex-direction: column;
-    background-color: rgb(0,0,0, 0.05);
+    background-color: rgb(0,0,0, 0.03);
     padding: 25px;
     
 }
@@ -51,6 +51,7 @@
 .dashboard > .totalWalletBalanceContainer > .totWalletValue > span {
     font-size: 15px;
     font-weight: bold;
+    margin-left: 3px;
 }
 
 .dashboard > .subWalletSection {
@@ -71,7 +72,7 @@
 .dashboard > .subWalletSection > .subWalletLayout >.subWalletContainer {
     display: flex;
     flex-direction: column;
-    background-color: rgb(0,0,0, 0.05);
+    background-color: rgb(0,0,0, 0.03);
     flex: 1;
     padding: 25px;
 }
@@ -87,4 +88,5 @@
 
 .dashboard > .subWalletSection > .subWalletLayout >.subWalletContainer > .subWalletValue > span {
     font-size: 14px;
+    margin-left: 4px;
 }

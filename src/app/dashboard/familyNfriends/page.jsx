@@ -1,15 +1,21 @@
+'use client';
 import Image from 'next/image';
 import React from 'react';
 import styles from './page.module.css';
+import { useContainer } from 'unstated-next';
+import Global from '@/state/global';
 
 const FamilyAndFriends = () => {
+
+  const { allocations, setAllocationData } = useContainer(Global);
+
   return (
     <div className={styles.fnf}>
         <p className={styles.title}>Famiy and Friends</p>
         <p>Send money to any address in your family and friends address book</p>
         <section className={styles.fnfBalanceContainer}>
             <p className={styles.fnfWalletLabel}>Family and Friends Balance</p>
-            <p className={styles.fnfWalletValue}>0<span>ETH</span></p>
+            <p className={styles.fnfWalletValue}>{allocations.fnf}<span>ETH</span></p>
             <div className={styles.actions}>
                 <div>
                     <Image 

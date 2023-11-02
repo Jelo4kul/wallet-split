@@ -7,41 +7,39 @@ import { sepolia } from 'viem/chains';
 import { useContainer } from 'unstated-next';
 import Global from '@/state/global';
 import { validatorABI, validatorAddress } from '@/constants/constants';
+import { useAccount } from 'wagmi';
+
 
 const Dashboard = () => {
 
 const [balance, setbalance] = useState('0');
-const [allocations, setAllocations] = useState({
-    fnf: '',
-    miscellaneous: '',
-    nfts: '',
-});
-
 
 const transport = http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`)
 const publicClient = createPublicClient({
     chain: sepolia,
     transport,
-})
-const { address: swAddress } = useContainer(Global);
+});
+const { address: swAddress, connector, isConnected, isConnecting } = useAccount();
+const { allocations, setAllocationData } = useContainer(Global);
 
 useEffect(() => {
     const getSmartWalletBalance = async () => {
-        let bal = await publicClient.getBalance({address: '0x0c39430b5099EEeF936251b4965BD6503Ca1b05F'});
+        let bal = await publicClient.getBalance({address: swAddress});
         setbalance(formatEther(bal+''));
 
         const allocs = await publicClient.readContract({
             address: validatorAddress,
             abi: validatorABI,
             functionName: 'getAllocations',
-            args: ['0x0c39430b5099EEeF936251b4965BD6503Ca1b05F']
+            args: [swAddress]
         })
-        setAllocations({
-            fnf: formatEther(allocs[2]),
-            nfts: formatEther(allocs[3]),
-            miscellaneous: formatEther(allocs[4]),
-          
-        })
+        setAllocationData(
+            {
+                fnf: formatEther(allocs[2]),
+                nfts: formatEther(allocs[3]),
+                miscellaneous: formatEther(allocs[4]),
+            }
+        )
     }
     getSmartWalletBalance();
 }, []);

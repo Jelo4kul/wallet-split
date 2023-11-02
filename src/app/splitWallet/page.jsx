@@ -3,18 +3,30 @@
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import styles from './page.module.css';
-import { createPublicClient, http } from 'viem';
+import { createPublicClient, http, isAddress, formatEther, parseEther, encodeFunctionData } from 'viem';
 import { sepolia } from 'viem/chains';
 import { useContainer } from 'unstated-next';
 import Global from '@/state/global';
 import { execAddress, kernelABI, openseaAddress, selector, validAfter, validatorAddress, validUntil } from '@/constants/constants';
-const { formatEther, parseEther, encodeFunctionData } = require('viem');
+import { useAccount } from 'wagmi';
+// const { formatEther, parseEther, encodeFunctionData } = require('viem');
+import { ECDSAProvider, getRPCProviderOwner } from '@zerodev/sdk';
+import { useRouter } from 'next/navigation';
+
+const SplitStates = {
+    UNSPLIT: "Split",
+    SPLITTING: "Splitting wallet...",
+    SPLITTED: "Wallet Splitted"
+}
 
 const WalletSplit = () => {
 
   const [balance, setbalance] = useState('0');
+  //this state is necessary to prevent re-hydration error
+  const [isClient, setIsClient] = useState(false)
   const [isDepositClicked, setisDepositClicked] = useState(false)
   const [isSplitClicked, setisSplitClicked] = useState(false)
+  const [splitState, setSplitState] = useState(SplitStates.UNSPLIT)
   const [isFnfClicked, setIsFnfClicked] = useState(false)
   const [allocations, setAllocations] = useState({
       fnf: '',
@@ -22,7 +34,12 @@ const WalletSplit = () => {
       nfts: '',
       fnfAddresses: []
   })
-  const { address: swAddress, ecdsaProvider, owner } = useContainer(Global);
+  const [error, setError] = useState({
+    invalidAddress: false
+  })
+  const router = useRouter();
+ const { address: swAddress, connector, isConnected, isConnecting } = useAccount();
+  //const { address: swAddress, ecdsaProvider, owner } = useContainer(Global);
   const transport = http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`)
   const publicClient = createPublicClient({
     chain: sepolia,
@@ -30,9 +47,17 @@ const WalletSplit = () => {
   })
 
   useEffect(() => {
+    if(splitState === SplitStates.SPLITTED){
+        router.push("/dashboard");
+    }
+  }, [splitState]);
+
+  useEffect(() => {
     const getSmartWalletBalance = async () => {
         let bal = await publicClient.getBalance({address: swAddress});
         setbalance(formatEther(bal+''));
+        //prevents re-hydration error
+        setIsClient(true);
     }
     getSmartWalletBalance();
   }, []);
@@ -47,45 +72,64 @@ const WalletSplit = () => {
   }
   
   const setExecution = async () => {
-    //TODO: SAplit wallet can't be called before creating a wallet
-    const address = await ecdsaProvider.getAddress();
-    console.log('Smart wallet address:', address);
+        //TODO: Split wallet can't be called before creating a wallet
 
-    console.log(owner)
-    const delimiter = /[\s,]+/;
-    const familyNfrens =  allocations.fnfAddresses.split(delimiter);
+        const owner = getRPCProviderOwner(window.ethereum);
+        const delimiter = /[\s,]+/;
 
-    const cardObject = {
-      ownerAddress: await owner.getAddress(),
-      openseaAddress: openseaAddress,
-      familyNFrenAlloc: parseEther(allocations.fnf).toString(16).padStart(64, '0'),
-      nftAlloc: parseEther(allocations.nfts).toString(16).padStart(64, '0'),
-      generalAlloc: parseEther(allocations.miscellaneous).toString(16).padStart(64, '0'),
-      familyNfrens: familyNfrens
-  };
 
-    const enableData = encodeCardObject(cardObject);
-    //This is the UserOperation Calldata
-    //Set the executor and validator for a specific function selector
-    const { hash } = await ecdsaProvider.sendUserOperation({
-        //The address here is the smart contract address after it has been deployed/created
-        target: address,
-        value: 0,
-        data: encodeFunctionData({
-            abi: kernelABI,
-            functionName: 'setExecution',
-            args: [selector, execAddress, validatorAddress, validUntil, validAfter, enableData]
+        const familyNfrens =  allocations?.fnfAddresses?.split(delimiter);
+        const allAddresesValid = familyNfrens.every(addr => isAddress(addr));
+        setError({
+            ...error,
+            invalidAddress: !allAddresesValid
+        });
+
+        if(!allAddresesValid){
+            throw new Error("Invalid Address")
+        }
+
+        const cardObject = {
+        ownerAddress: await owner.getAddress(),
+        openseaAddress: openseaAddress,
+        familyNFrenAlloc: parseEther(allocations.fnf).toString(16).padStart(64, '0'),
+        nftAlloc: parseEther(allocations.nfts).toString(16).padStart(64, '0'),
+        generalAlloc: parseEther(allocations.miscellaneous).toString(16).padStart(64, '0'),
+        familyNfrens: familyNfrens
+       };
+
+        const enableData = encodeCardObject(cardObject);
+
+        const ecdsaProvider = await ECDSAProvider.init({
+            projectId: process.env.NEXT_PUBLIC_PROJECT_ID_SEPOLIA,
+            owner
         })
-    })
 
-    //This will wait for the user operation to be included in a transaction that's been mined.
-    await ecdsaProvider.waitForUserOperationTransaction(hash);
+        setSplitState(SplitStates.SPLITTING);
+        //This is the UserOperation Calldata
+        //Set the executor and validator for a specific function selector
+        const { hash } = await ecdsaProvider.sendUserOperation({
+            //The address here is the smart contract address after it has been deployed/created
+            target: swAddress,
+            value: 0,
+            data: encodeFunctionData({
+                abi: kernelABI,
+                functionName: 'setExecution',
+                args: [selector, execAddress, validatorAddress, validUntil, validAfter, enableData]
+            })
+        })
 
-    console.log("Validator and Executor set");
+        //This will wait for the user operation to be included in a transaction that's been mined.
+        await ecdsaProvider.waitForUserOperationTransaction(hash);
 
-    return new Promise((resolve) => {
-        resolve(address);
-    });
+        console.log("Validator and Executor set");
+
+        setSplitState(SplitStates.SPLITTED);
+        
+        return new Promise((resolve) => {
+            resolve(swAddress);
+        });
+
   }
 
   const handleDepositClicked = () => {
@@ -142,7 +186,7 @@ const WalletSplit = () => {
         <section className={styles.top}>
             <div className={styles.top_left}>
                 <div className={styles.walletAddressAndIcon}>
-                    <p className={styles.walletAddress}>{swAddress}</p>
+                    <p className={styles.walletAddress}>{isClient ? swAddress : "loading..." }</p>
                     <Image 
                         src="/copy.svg"
                         width={20}
@@ -156,7 +200,7 @@ const WalletSplit = () => {
             </div>
             <div className={styles.top_divider}></div>
             <div className={styles.top_right}>
-                <p className={styles.walletValue}>{balance}<span>Eth</span></p>
+                <p className={styles.walletValue}>{isClient ? balance : "loading..."}<span>Eth</span></p>
                 <p className={styles.walletValueLabel}>Smart Wallet Balance</p>
             </div>
         </section>
@@ -164,12 +208,14 @@ const WalletSplit = () => {
             {isSplitClicked ? 
             (
                 <form onSubmit={handleSubmit} className={styles.allocForm}>
+                    {error.invalidAddress && <div className={styles.error}>Invalid Family and Friend Address</div>}
                     <div className={styles.fnfMainContainer}>
                         <p>Family and Friends</p>
                         <div className={styles.fnfSubContainer}>
                             <div className={styles.labelAndInput}>
                                 <label htmlFor="fnf">Allocation for Family and Friends:</label>
                                 <input
+                                    required
                                     type="number"
                                     id="fnf"
                                     name="fnf"
@@ -190,6 +236,7 @@ const WalletSplit = () => {
                             </div>
                             {isFnfClicked && 
                               <textarea
+                                    required
                                     value={allocations.fnfAddresses}
                                     onChange={handleInputChange}
                                     name="fnfAddresses"
@@ -205,6 +252,7 @@ const WalletSplit = () => {
                     <div className={styles.labelAndInput}>
                         <label htmlFor="miscellaneous">Allocation for Miscellaneous Expenses:</label>
                         <input
+                            required
                             type="number"
                             id="miscellaneous"
                             name="miscellaneous"
@@ -215,6 +263,7 @@ const WalletSplit = () => {
                     <div className={styles.labelAndInput}>
                         <label htmlFor="nfts">Allocation for Nft purchases:</label>
                         <input
+                            required
                             type="number"
                             id="nfts"
                             name="nfts"
@@ -222,7 +271,7 @@ const WalletSplit = () => {
                             onChange={handleInputChange}
                         />
                     </div>
-                    <button onClick={handleSplitAction}>Split</button>
+                    <button onClick={handleSplitAction}>{splitState}</button>
                 </form>
             ) : (
                     

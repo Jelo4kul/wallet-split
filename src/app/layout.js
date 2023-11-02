@@ -1,5 +1,6 @@
 import { Raleway } from 'next/font/google'
 import './globals.css';
+import '@rainbow-me/rainbowkit/styles.css';
 import { configureChains, mainnet, WagmiConfig, createConfig, } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import WagmiWrapper from '@/components/WagmiWrapper';
