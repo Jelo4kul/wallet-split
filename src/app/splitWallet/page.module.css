@@ -244,7 +244,7 @@
     }
     
     .bottom {
-        width: auto;
+        width: 100%;
         padding: 30px 0;
     }
 
@@ -253,56 +253,32 @@
     }
 
     .bottom > .allocForm {
-        display: flex;
-        flex-direction: column;
-        gap: 40px;
-        width: 70%;
+        gap: 33px;
+        width: 80%;
+        font-size: 14px;
+        margin: 0;
     }
 
-    .bottom > .allocForm > .error {
-        display: flex;
+    .bottom .labelAndInput > input {
+        font-size: 15px;
+        font-weight: 300;
+    }
+
+    .bottom > .allocForm > .fnfMainContainer {
+        width: 100%;
+    }
+
+    .bottom > .allocForm > .fnfMainContainer > .fnfSubContainer {
         padding: 20px;
-        background-color: red;
-        color: white;
-        justify-content: center;
-        align-items: center;
     }
 
+    .bottom > .allocForm > .fnfMainContainer > .fnfSubContainer textarea  {
+        font-size: 14px;
+    }
 
-.bottom > .allocForm > .fnfMainContainer > .fnfSubContainer {
-    display: flex;
-    flex-direction: column;
-    padding: 30px;
-    border:  0.2px solid rgb(189, 189, 189);
-}
-
-.bottom > .allocForm > .fnfMainContainer > .fnfSubContainer >.addContainer {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: rgb(126, 126, 226);
-    margin-top: 16px;
-}
-
-.bottom > .allocForm > .fnfMainContainer > .fnfSubContainer >.addContainer p, .addIcon {
-    cursor: pointer;
-    margin: 0;
-} 
-
-.bottom > .allocForm > .fnfMainContainer > .fnfSubContainer textarea  {
-    border:  0.2px solid rgb(189, 189, 189);
-    font-family: 'Raleway', sans-serif;
-    color: black;
-    padding: 10px;
-    line-height:25px;
-    font-size: 20px;
-    font-weight: 400;
-    margin-top: 16px;
-}
-.bottom > .allocForm > .fnfMainContainer > .fnfSubContainer textarea::placeholder {
-    font-weight: 300;
-    font-size: 16px;
-}
+    .bottom > .allocForm > .fnfMainContainer > .fnfSubContainer textarea::placeholder {
+        font-size: 15px;
+    }
 
     .overlay > .modal {
         width: 70%;

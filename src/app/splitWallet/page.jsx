@@ -275,7 +275,7 @@ const WalletSplit = () => {
                 </form>
             ) : (
                     
-            balance === '1' ? 
+            balance === '0' ? 
                 <>
                     <Image 
                         src="/empty-wallet.svg"
