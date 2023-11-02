@@ -20,3 +20,9 @@
     cursor: pointer;
     text-align: center;
 } 
+
+@media only screen and (max-width: 768px) {
+    .walletCreation {
+        text-align: center;
+    }
+}

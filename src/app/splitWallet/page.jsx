@@ -275,7 +275,7 @@ const WalletSplit = () => {
                 </form>
             ) : (
                     
-            balance === '0' ? 
+            balance === '1' ? 
                 <>
                     <Image 
                         src="/empty-wallet.svg"
@@ -283,7 +283,7 @@ const WalletSplit = () => {
                         height={200}
                         alt="Split wallet"
                     />
-                    <p>Your wallet balance is empty. Deposit to enable splitting</p>
+                    <p className={styles.depositGuideLabel}>Your wallet balance is empty. Deposit to enable splitting</p>
                     <button onClick={handleDepositClicked}>Deposit</button>
                 </> : 
                 <>
@@ -293,7 +293,7 @@ const WalletSplit = () => {
                         height={200}
                         alt="Split wallet"
                     />
-                    <p>Now that you have funded your wallet, it is time to split</p>
+                    <p className={styles.timeToSplit}>Now that you have funded your wallet, it is time to split</p>
                     <button onClick={handleSplitClicked}>Split Wallet</button>
                 </>
             )}
@@ -308,6 +308,7 @@ const WalletSplit = () => {
                             width={40}
                             height={40}
                             alt="Split wallet"
+                            className={styles.closeModalImage}
                         />
                     </div>
                     <p className={styles.sendEthLabel}>Send Eth to this Address</p>
@@ -321,11 +322,10 @@ const WalletSplit = () => {
                         />
                  </div>
              </div>
-         </div>
-        }
-       
+             </div>
+        }  
     </section>
   )
 }
 
-export default WalletSplit
+export default WalletSplit;
