@@ -35,7 +35,8 @@ export default function Home() {
             src="/forward-arrow.svg"
             width={40}
             height={40}
-            alt="Split wallet"
+            alt="split arrow"
+            className={styles.splitArrow}
           />
           <section className={styles.Home_Right_right}>
             <p className={styles.right_subHeading}>To this</p>

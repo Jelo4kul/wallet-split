@@ -275,7 +275,7 @@ const WalletSplit = () => {
                 </form>
             ) : (
                     
-            balance === 0 ? 
+            balance === '0' ? 
                 <>
                     <Image 
                         src="/empty-wallet.svg"
@@ -312,7 +312,7 @@ const WalletSplit = () => {
                     </div>
                     <p className={styles.sendEthLabel}>Send Eth to this Address</p>
                     <div className={styles.addressAndIcon}>
-                        <p>0x79d899379844d35a1a1f5d51d3185dd821f44dc1</p>
+                        <p>{swAddress}</p>
                         <Image 
                             src="/wallet.svg"
                             width={20}
