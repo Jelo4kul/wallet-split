@@ -11,29 +11,29 @@ const FamilyAndFriends = () => {
 
   return (
     <div className={styles.fnf}>
-        <p className={styles.title}>Famiy and Friends</p>
-        <p>Send money to any address in your family and friends address book</p>
+        <p className={styles.title}>Family and Friends</p>
+        <p className={styles.subTitle}>Send money to any address in your family and friends address book</p>
         <section className={styles.fnfBalanceContainer}>
             <p className={styles.fnfWalletLabel}>Family and Friends Balance</p>
             <p className={styles.fnfWalletValue}>{allocations.fnf}<span>ETH</span></p>
             <div className={styles.actions}>
-                <div>
+                <div className={styles.actionsBox}>
                     <Image 
                         src="/send.svg"
-                        width={20}
-                        height={20}
+                        width={18}
+                        height={18}
                         alt="Send"
                     /> 
-                    <p>Send</p>
+                    <p className={styles.actionLabel}>Send</p>
                 </div>
-                <div>
+                <div className={styles.actionsBox}>
                     <Image 
                         src="/update.svg"
-                        width={20}
-                        height={20}
+                        width={18}
+                        height={18}
                         alt="Update"
                     /> 
-                    <p>Update</p>
+                    <p className={styles.actionLabel}>Update</p>
                 </div>
             </div>
         </section>

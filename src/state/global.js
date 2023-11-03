@@ -5,9 +5,9 @@ function useData() {
     // const [owner, setOwner] = useState(null);
     // const [ecdsaProvider, setEcdsaProvider] = useState(null);
     const [allocations, setAllocations] = useState({
-        fnf: '',
-        miscellaneous: '',
-        nfts: '',
+        fnf: '0',
+        miscellaneous: '0',
+        nfts: '0',
         fnfAddresses: []
     })
 

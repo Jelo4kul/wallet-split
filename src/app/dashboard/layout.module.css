@@ -78,5 +78,6 @@
 
     .layout > .right {
         order: 1;
+        width: 100%;
     }
 }
