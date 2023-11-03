@@ -90,3 +90,53 @@
     font-size: 14px;
     margin-left: 4px;
 }
+
+@media only screen and (max-width: 768px) { 
+
+    .dashboard {
+
+      
+    }
+
+    .dashboard > .totalWalletBalanceContainer {
+        width: 100%;
+    }
+
+    .dashboard > .subWalletSection > .subWalletLabel {
+        font-size: 18px;
+        margin-top: 50px;
+    }
+    
+    .dashboard > .subWalletSection > .subWalletLayout {
+        display: flex;
+        gap: 20px;
+        width: 100%;
+        overflow-x: scroll;
+        padding-right: 70px;
+    }
+    
+    .dashboard > .subWalletSection > .subWalletLayout >.subWalletContainer {
+        display: flex;
+        flex-direction: column;
+        background-color: rgb(0,0,0, 0.03);
+        flex: 1;
+        padding: 25px;
+    }
+
+    .dashboard > .totalWalletBalanceContainer > .actions {
+        display: flex;
+        width: 100%;
+        margin-top: 20px;
+        justify-content: space-between;
+        gap: 0;
+    }
+
+    .actionsBox {
+
+    }
+
+    .actionsBox > .actionLabel {
+        font-size: 14px;
+    }
+
+}

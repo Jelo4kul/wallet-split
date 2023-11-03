@@ -51,32 +51,32 @@ useEffect(() => {
             <p className={styles.totWalletLabel}>Total Wallet Balance</p>
             <p className={styles.totWalletValue}>{balance}<span>ETH</span></p>
             <div className={styles.actions}>
-                <div>
+                <div className={styles.actionsBox}>
                     <Image 
                         src="/deposit.svg"
                         width={20}
                         height={20}
                         alt="Deposit"
                     /> 
-                    <p>Deposit</p>
+                    <p className={styles.actionLabel}>Deposit</p>
                 </div>
-                <div>
+                <div className={styles.actionsBox}>
                     <Image 
                         src="/send.svg"
                         width={20}
                         height={20}
                         alt="Send"
                     /> 
-                    <p>Send</p>
+                    <p className={styles.actionLabel}>Send</p>
                 </div>
-                <div>
+                <div className={styles.actionsBox}>
                     <Image 
                         src="/update.svg"
                         width={20}
                         height={20}
                         alt="Update"
                     /> 
-                    <p>Update</p>
+                    <p className={styles.actionLabel}>Update</p>
                 </div>
             </div>
         </section>

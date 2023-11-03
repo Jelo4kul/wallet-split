@@ -38,3 +38,45 @@
 .layout > .right {
     width: 85%;
 }
+
+@media only screen and (max-width: 768px) { 
+
+    .layout {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .layout > .left {
+        flex-direction: row;
+        padding: 0;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        z-index: 2;
+        order: 2;
+    }
+
+    .layout > .left > .verticalNav {
+        flex-direction: row;
+        width: 100vw;
+    }
+
+    .layout > .left > .verticalNav > ul {  
+        flex-direction: row;
+        gap: 37px;
+        width: 100%;
+        justify-content: space-evenly;
+    }
+
+    .layout > .left > .verticalNav > ul > li {
+        flex-direction: column;
+        font-size: 14px;
+        gap: 9px;
+    }
+
+    .layout > .right {
+        order: 1;
+    }
+}
