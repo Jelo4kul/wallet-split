@@ -78,3 +78,30 @@
 .miscellaneous > .transacSec > .trasancImageBox > .transacImage {
  
 }
+
+@media only screen and (max-width: 768px) { 
+
+    .miscellaneous {
+        width: 100%;
+    }
+
+    .miscellaneous > .subTitle {
+        font-size: 14px;
+    }
+
+    .actionsBox > .actionLabel {
+        font-size: 14px;
+    }
+
+    .transacSec {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .transacSec > .trasancImageBox {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+    }
+}
