@@ -35,40 +35,48 @@ const DashboardLayout = ({ children }) => {
             <nav className={styles.verticalNav}>
                 <ul>
                     <li>
-                        <Image 
-                            src="/wallet-dashboard.svg"
-                            width={20}
-                            height={20}
-                            alt="wallet overview"
-                         />
-                        <Link href='/dashboard' className={styles.NavMenu}>{windowWidth < 460 ? 'Wallet' : 'Wallet Overview'}</Link>
+                        <Link  href='/dashboard' className={styles.NavMenu}>
+                            <Image 
+                                src="/wallet-dashboard.svg"
+                                width={20}
+                                height={20}
+                                alt="wallet overview"
+                            />
+                            <p >{windowWidth < 460 ? 'Wallet' : 'Wallet Overview'}</p>
+                        </Link>
                     </li>
                     <li>
-                        <Image 
-                            src="/fnf.svg"
-                            width={20}
-                            height={20}
-                            alt="Family and Friends"
-                        />
-                        <Link href='/dashboard/familyNfriends' className={styles.NavMenu}>{windowWidth < 460 ? 'F.n.F' : 'Family and Friends'}</Link>
+                        <Link  href='/dashboard/familyNfriends' className={styles.NavMenu}>
+                            <Image 
+                                src="/fnf.svg"
+                                width={20}
+                                height={20}
+                                alt="Family and Friends"
+                            />
+                            <p>{windowWidth < 460 ? 'F.n.F' : 'Family and Friends'}</p>
+                        </Link>
                     </li>
                     <li>
-                        <Image 
-                            src="/miscellaneous.svg"
-                            width={20}
-                            height={20}
-                            alt="Miscellaneous"
-                        />
-                        <Link href='/dashboard/miscellaneous' className={styles.NavMenu}>{windowWidth < 460 ? 'Misc' : 'Miscellaneous'}</Link>
+                        <Link  href='/dashboard/miscellaneous' className={styles.NavMenu}>
+                            <Image 
+                                src="/miscellaneous.svg"
+                                width={20}
+                                height={20}
+                                alt="Miscellaneous"
+                            />
+                            <p>{windowWidth < 460 ? 'Misc' : 'Miscellaneous'}</p>
+                        </Link>
                     </li>
                     <li>
-                        <Image 
-                            src="/nfts.svg"
-                            width={20}
-                            height={20}
-                            alt="NFTs"
-                         />
-                        <Link href='/dashboard/nfts' className={styles.NavMenu}>NFTs</Link>
+                        <Link  href='/dashboard/nfts' className={styles.NavMenu}>
+                            <Image 
+                                src="/nfts.svg"
+                                width={20}
+                                height={20}
+                                alt="NFTs"
+                            />
+                            <p>NFTs</p>
+                        </Link>
                     </li>
                 </ul>
             </nav>

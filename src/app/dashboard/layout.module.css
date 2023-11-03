@@ -20,7 +20,7 @@
 .layout > .left > .verticalNav > ul {  
     display: flex;
     flex-direction: column;
-    gap: 50px;
+    gap: 30px;
     list-style: none;
     padding: 0;
 }
@@ -32,7 +32,10 @@
 }
 
 .layout .NavMenu{
-   color: black;
+    color: black;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .layout > .right {
@@ -75,6 +78,12 @@
         font-size: 14px;
         gap: 9px;
     }
+
+    .layout .NavMenu{
+        flex-direction: column;
+        justify-content: center;
+        gap: 0;
+     }
 
     .layout > .right {
         order: 1;
