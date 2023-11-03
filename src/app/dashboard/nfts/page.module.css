@@ -78,3 +78,30 @@
 .nfts > .transacSec > .trasancImageBox > .transacImage {
  
 }
+
+@media only screen and (max-width: 768px) { 
+
+    .nfts {
+        width: 100%;
+    }
+
+    .nfts > .subTitle {
+        font-size: 14px;
+    }
+
+    .actionsBox > .actionLabel {
+        font-size: 14px;
+    }
+
+    .transacSec {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .transacSec > .trasancImageBox {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+    }
+}
