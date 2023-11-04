@@ -110,6 +110,10 @@
         overflow-x: scroll;
         padding-right: 70px;
     }
+
+    .dashboard > .subWalletSection > .subWalletLayout::-webkit-scrollbar {
+        width: 0; /* Hide scrollbar For WebKit (Chrome, Safari, etc.) */
+    }
     
     .dashboard > .subWalletSection > .subWalletLayout >.subWalletContainer {
         display: flex;

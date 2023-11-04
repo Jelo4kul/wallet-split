@@ -96,6 +96,7 @@
     .transacSec {
         width: 100%;
         font-size: 14px;
+        padding-bottom: 30px;
     }
 
     .transacSec > .trasancImageBox {

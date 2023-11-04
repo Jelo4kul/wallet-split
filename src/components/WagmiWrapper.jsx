@@ -1,6 +1,7 @@
 'use client';
 
-import { configureChains, sepolia, WagmiConfig, createConfig } from 'wagmi';
+import { configureChains, WagmiConfig, createConfig } from 'wagmi';
+import { sepolia } from 'wagmi/chains';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
@@ -8,7 +9,7 @@ import { SocialWalletConnector } from '@zerodev/wagmi';
 import React from 'react';
 import Global from '@/state/global';
 // RainbowKit
-import { connectorsForWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import { connectorsForWallets, RainbowKitProvider, getDefaultWallets } from '@rainbow-me/rainbowkit';
 import {
   metaMaskWallet,
   rainbowWallet,
@@ -19,12 +20,21 @@ let socialConnector;
 //NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID
 const WagmiWrapper = ({ children }) => {
 
+
   const { chains, publicClient, webSocketPublicClient } = configureChains(
         [sepolia],
         [alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY }), publicProvider()]
   );
 
+  const { wallets } = getDefaultWallets({
+    appName: 'Wallet split',
+    projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
+    chains,
+  });
+
   const connectors = connectorsForWallets([
+    //Tip: including the wallets object is important, if not you won'y be able to programmatically switch networks from your app
+    ...wallets,
     {
       groupName: "EOA wrapped with AA",
       wallets: [
