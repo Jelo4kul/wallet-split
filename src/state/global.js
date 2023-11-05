@@ -3,7 +3,7 @@ import { useState } from 'react';
 function useData() {
     // const [address, setSmartWalletAddress] = useState('');
     // const [owner, setOwner] = useState(null);
-    // const [ecdsaProvider, setEcdsaProvider] = useState(null);
+    const [isWalletSplitted, setIsWalletSplitted] = useState(false);
     const [allocations, setAllocations] = useState({
         fnf: '0',
         miscellaneous: '0',
@@ -20,19 +20,11 @@ function useData() {
         )
     };
 
-    // const setAddress = (_addr) => {
-    //     setSmartWalletAddress(_addr);
-    // };
+    const assignIsWalletSplitted = (_truthyValue) => {
+        setIsWalletSplitted(_truthyValue);
+    };
 
-    // const setOwnerObject = (_owner) => {
-    //     setOwner(_owner);
-    // }
-
-    // const setEcdsaProviderObj = (_provider) => {
-    //     setEcdsaProvider(_provider);
-    // }
-
-    return { allocations, setAllocationData };
+    return { allocations, setAllocationData, isWalletSplitted, assignIsWalletSplitted };
 }
 
 const Global = createContainer(useData);

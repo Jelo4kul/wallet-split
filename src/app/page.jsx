@@ -1,23 +1,58 @@
 'use client';
 
 import Image from 'next/image'
-import styles from './page.module.css'
-import Link from 'next/link';
-
-import {  useAccount, useConnect, useEnsName, useNetwork, useDisconnect  } from 'wagmi';
-import { InjectedConnector } from 'wagmi/connectors/injected';
-import { socialConnector } from '@/components/WagmiWrapper';
-import { useState } from 'react';
+import styles from './page.module.css';
+import { sepolia } from 'viem/chains';
+import { createPublicClient, http } from 'viem';
+import { validatorABI, validatorAddress } from '@/constants/constants';
+import { useEffect } from 'react';
+import {  useAccount  } from 'wagmi';
+import { useRouter } from 'next/navigation';
+import { useContainer } from 'unstated-next';
+import Global from '@/state/global';
 
 
 export default function Home() {
+
+  const { address: swAddress } = useAccount();
+  const router = useRouter();
+  const transport = http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`)
+  const publicClient = createPublicClient({
+      chain: sepolia,
+      transport,
+  });
+  const {  isConnected } = useAccount();
+
+  const { assignIsWalletSplitted } = useContainer(Global);
+
+  const handleClick = async () => {
+        const allocs = await publicClient.readContract({
+          address: validatorAddress,
+          abi: validatorABI,
+          functionName: 'getAllocations',
+          args: [swAddress]
+      })
+
+      //if it's a new smart wallet
+      if(allocs[0] === "0x0000000000000000000000000000000000000000") {
+        assignIsWalletSplitted(false);
+        if(isConnected) {
+          router.push('/splitWallet')
+        } else {
+          router.push("/createWallet");  
+        }
+      } else {
+        console.log(allocs)
+        router.push("/dashboard");
+      }
+  };
 
  return (
    <div className={styles.Home}>
      <section className={styles.Home_Left}>
         <h1>Manage your wallets better</h1>
         <p className={styles.sub_heading}>Split your wallet into mini sub-wallets and allocate a portion of your entire balance for each sub-wallet</p>
-        <Link href='/createWallet'>Get Started</Link>
+        <button onClick={handleClick}>Get Started</button>
         <div></div>
      </section>
      <section className={styles.Home_Right}>

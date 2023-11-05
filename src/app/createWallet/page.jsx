@@ -14,12 +14,17 @@ const WalletCreation = () => {
  // const [loading, setIsLoading] = useState(false);
   //const [address, setKernelAddress] = useState('');
   const router = useRouter();
-  //const { address: swAddress, setAddress, owner, setOwnerObject, ecdsaProvider, setEcdsaProviderObj } = useContainer(Global);
+  const { isWalletSplitted, assignIsWalletSplitted } = useContainer(Global);
   const {  isConnected } = useAccount();
 
   useEffect(() => {
+    //isConnected == true, means user has already created smart wallet
     if(isConnected){
-      router?.push('/splitWallet');
+      if(isWalletSplitted) {
+        router?.push('/dashboard');
+      }else {
+        router?.push('/splitWallet');
+      }
     }
   }, [isConnected])
 

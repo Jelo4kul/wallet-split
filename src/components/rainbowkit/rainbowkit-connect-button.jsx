@@ -1,6 +1,8 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { ECDSAProvider, getRPCProviderOwner } from '@zerodev/sdk'
 
-const CustomRainbowkitBtn = () => {
+const CustomRainbowkitBtn = (props) => {
+
   return (
     <ConnectButton.Custom>
       {({
@@ -37,7 +39,7 @@ const CustomRainbowkitBtn = () => {
               if (!connected) {
                 return (
                   <button onClick={openConnectModal} type="button">
-                    Create Wallet
+                    Connect Wallet
                   </button>
                 );
               }
@@ -52,7 +54,40 @@ const CustomRainbowkitBtn = () => {
 
               return (
                 <div style={{ display: 'flex', gap: 12 }}>
-                  Connected
+                  <button
+                    onClick={openChainModal}
+                    style={{ display: 'flex', alignItems: 'center' }}
+                    type="button"
+                  >
+                    {chain.hasIcon && (
+                      <div
+                        style={{
+                          background: chain.iconBackground,
+                          width: 12,
+                          height: 12,
+                          borderRadius: 999,
+                          overflow: 'hidden',
+                          marginRight: 4,
+                        }}
+                      >
+                        {chain.iconUrl && (
+                          <img
+                            alt={chain.name ?? 'Chain icon'}
+                            src={chain.iconUrl}
+                            style={{ width: 12, height: 12 }}
+                          />
+                        )}
+                      </div>
+                    )}
+                    {chain.name}
+                  </button>
+
+                  <button onClick={openAccountModal} type="button">
+                    {props.swAddress}
+                    {account.displayBalance
+                      ? ` (${account.displayBalance})`
+                      : ''}
+                  </button>
                 </div>
               );
             })()}
@@ -60,7 +95,7 @@ const CustomRainbowkitBtn = () => {
         );
       }}
     </ConnectButton.Custom>
-  )
+  );
 }
 
 export default CustomRainbowkitBtn;

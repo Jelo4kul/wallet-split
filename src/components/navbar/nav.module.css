@@ -23,6 +23,7 @@
     flex: 1;
     display: flex;
     justify-content: flex-end;
+    margin-right: 400px;
 }
 
 .auth > button {

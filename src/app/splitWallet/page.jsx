@@ -7,11 +7,11 @@ import { createPublicClient, http, isAddress, formatEther, parseEther, encodeFun
 import { sepolia } from 'viem/chains';
 import { useContainer } from 'unstated-next';
 import Global from '@/state/global';
-import { execAddress, kernelABI, openseaAddress, selector, validAfter, validatorAddress, validUntil } from '@/constants/constants';
+import { execAddress, kernelABI, openseaAddress, selector, validAfter, validatorABI, validatorAddress, validUntil } from '@/constants/constants';
 import { useAccount } from 'wagmi';
-// const { formatEther, parseEther, encodeFunctionData } = require('viem');
 import { ECDSAProvider, getRPCProviderOwner } from '@zerodev/sdk';
 import { useRouter } from 'next/navigation';
+import { useConnectModal } from '@rainbow-me/rainbowkit';
 
 const SplitStates = {
     UNSPLIT: "Split",
@@ -37,9 +37,10 @@ const WalletSplit = () => {
   const [error, setError] = useState({
     invalidAddress: false
   })
+  const { isWalletSplitted, assignIsWalletSplitted } = useContainer(Global);
   const router = useRouter();
+  const { openConnectModal } = useConnectModal();
  const { address: swAddress, connector, isConnected, isConnecting } = useAccount();
-  //const { address: swAddress, ecdsaProvider, owner } = useContainer(Global);
   const transport = http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`)
   const publicClient = createPublicClient({
     chain: sepolia,
@@ -48,6 +49,7 @@ const WalletSplit = () => {
 
   useEffect(() => {
     if(splitState === SplitStates.SPLITTED){
+        assignIsWalletSplitted(true);
         router.push("/dashboard");
     }
   }, [splitState]);
@@ -59,8 +61,17 @@ const WalletSplit = () => {
         //prevents re-hydration error
         setIsClient(true);
     }
+
+    const checkIfWalletisSpliited = async () => {
+        //if user have splitted wallet
+        if(isWalletSplitted) {
+            router.push("/dashboard");
+        }
+    }
     getSmartWalletBalance();
-  }, []);
+    checkIfWalletisSpliited();
+  }, [swAddress]);
+
 
   const encodeCardObject = ({ ownerAddress, openseaAddress, familyNFrenAlloc, nftAlloc, generalAlloc, familyNfrens }) => {
     let packedFnf = '';
@@ -133,7 +144,11 @@ const WalletSplit = () => {
   }
 
   const handleDepositClicked = () => {
-    setisDepositClicked(true)
+      if(!isConnected) {
+        openConnectModal();
+      } else {
+        setisDepositClicked(true)
+      }
   };
 
   const handleSplitClicked = async () => {
@@ -315,7 +330,7 @@ const WalletSplit = () => {
                     <div className={styles.addressAndIcon}>
                         <p>{swAddress}</p>
                         <Image 
-                            src="/wallet.svg"
+                            src="/deposit.svg"
                             width={20}
                             height={20}
                             alt="Split wallet"

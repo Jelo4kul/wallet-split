@@ -26,28 +26,22 @@ const WagmiWrapper = ({ children }) => {
         [alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY }), publicProvider()]
   );
 
-  const { wallets } = getDefaultWallets({
-    appName: 'Wallet split',
-    projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
-    chains,
-  });
-
   const connectors = connectorsForWallets([
-    //Tip: including the wallets object is important, if not you won'y be able to programmatically switch networks from your app
-    ...wallets,
-    {
-      groupName: "EOA wrapped with AA",
-      wallets: [
-       enhanceWalletWithAAConnector(
-          metaMaskWallet({ projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID, chains }),
-         { projectId: process.env.NEXT_PUBLIC_PROJECT_ID_SEPOLIA}
-        )
-      ]
-    },
+    //There's a bug in zerodev's enhanceWalletWithAAConnector that doesn't automatically update the state whenever the user changes network
+    //It's only when you refresh, it shows you wrong network
+    // {
+    //   groupName: "EOA wrapped with AA",
+    //   wallets: [
+    //    enhanceWalletWithAAConnector(
+    //       metaMaskWallet({ projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID, chains }),
+    //      { projectId: process.env.NEXT_PUBLIC_PROJECT_ID_SEPOLIA}
+    //     )
+    //   ]
+    // },
     {
       groupName: "EOA",
       wallets: [
-        rainbowWallet({ projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID, chains})
+        metaMaskWallet({ projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID, chains})
       ]
     },
   ])

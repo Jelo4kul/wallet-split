@@ -22,7 +22,7 @@
   line-height: 30px;
 }
 
-.Home_Left > a {
+.Home_Left > button {
   background-color: black;
   color: white;
   padding: 19px;
