@@ -2,40 +2,15 @@
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import styles from './page.module.css';
-import { createPublicClient, http, formatEther } from 'viem';
-import { sepolia } from 'viem/chains';
+import { http } from 'viem';
 import { useContainer } from 'unstated-next';
 import Global from '@/state/global';
-import { validatorABI, validatorAddress } from '@/constants/constants';
 
 
 const Dashboard = () => {
 const transport = http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`)
-const publicClient = createPublicClient({
-    chain: sepolia,
-    transport,
-});
-const { allocations, setAllocationData, address: swAddress, loading, balance  } = useContainer(Global);
 
-useEffect(() => {
-    const setAllocData = async () => {
-
-        const allocs = await publicClient.readContract({
-            address: validatorAddress,
-            abi: validatorABI,
-            functionName: 'getAllocations',
-            args: [swAddress]
-        })
-        setAllocationData(
-            {
-                fnf: formatEther(allocs[2]),
-                nfts: formatEther(allocs[3]),
-                miscellaneous: formatEther(allocs[4]),
-            }
-        )
-    }
-    setAllocData();
-}, [loading]);
+const { allocations, setAllocationData,  balance  } = useContainer(Global);
 
   return (
     <div className={styles.dashboard}>
