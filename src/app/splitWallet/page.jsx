@@ -3,8 +3,7 @@
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import styles from './page.module.css';
-import { createPublicClient, http, isAddress, formatEther, parseEther, encodeFunctionData } from 'viem';
-import { sepolia } from 'viem/chains';
+import { isAddress, parseEther, encodeFunctionData } from 'viem';
 import { useContainer } from 'unstated-next';
 import Global from '@/state/global';
 import { execAddress, kernelABI, openseaAddress, selector, validAfter, validatorABI, validatorAddress, validUntil } from '@/constants/constants';
@@ -20,8 +19,6 @@ const SplitStates = {
 }
 
 const WalletSplit = () => {
-
-  const [balance, setbalance] = useState('0');
   //this state is necessary to prevent re-hydration error
   const [isClient, setIsClient] = useState(false)
   const [isDepositClicked, setisDepositClicked] = useState(false)
@@ -37,15 +34,10 @@ const WalletSplit = () => {
   const [error, setError] = useState({
     invalidAddress: false
   })
-  const { isWalletSplitted, assignIsWalletSplitted, address: swAddress } = useContainer(Global);
+  const { isWalletSplitted, assignIsWalletSplitted, address: swAddress, balance } = useContainer(Global);
   const router = useRouter();
   const { openConnectModal } = useConnectModal();
  const { isConnected } = useAccount();
-  const transport = http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`)
-  const publicClient = createPublicClient({
-    chain: sepolia,
-    transport,
-  })
 
   useEffect(() => {
     if(splitState === SplitStates.SPLITTED){
@@ -55,20 +47,14 @@ const WalletSplit = () => {
   }, [splitState]);
 
   useEffect(() => {
-    const getSmartWalletBalance = async () => {
-        let bal = await publicClient.getBalance({address: swAddress});
-        setbalance(formatEther(bal+''));
-        //prevents re-hydration error
-        setIsClient(true);
-    }
-
+    //prevents re-hydration error
+    setIsClient(true);
     const checkIfWalletisSpliited = async () => {
         //if user have splitted wallet
         if(isWalletSplitted) {
             router.push("/dashboard");
         }
     }
-    getSmartWalletBalance();
     checkIfWalletisSpliited();
   }, [swAddress]);
 

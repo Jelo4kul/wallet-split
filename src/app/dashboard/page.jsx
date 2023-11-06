@@ -7,25 +7,18 @@ import { sepolia } from 'viem/chains';
 import { useContainer } from 'unstated-next';
 import Global from '@/state/global';
 import { validatorABI, validatorAddress } from '@/constants/constants';
-import { useAccount } from 'wagmi';
 
 
 const Dashboard = () => {
-
-const [balance, setbalance] = useState('0');
-
 const transport = http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`)
 const publicClient = createPublicClient({
     chain: sepolia,
     transport,
 });
-
-const { allocations, setAllocationData, address: swAddress  } = useContainer(Global);
+const { allocations, setAllocationData, address: swAddress, loading, balance  } = useContainer(Global);
 
 useEffect(() => {
-    const getSmartWalletBalance = async () => {
-        let bal = await publicClient.getBalance({address: swAddress});
-        setbalance(formatEther(bal+''));
+    const setAllocData = async () => {
 
         const allocs = await publicClient.readContract({
             address: validatorAddress,
@@ -41,8 +34,8 @@ useEffect(() => {
             }
         )
     }
-    getSmartWalletBalance();
-}, []);
+    setAllocData();
+}, [loading]);
 
   return (
     <div className={styles.dashboard}>

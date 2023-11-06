@@ -85,8 +85,8 @@ const CustomRainbowkitBtn = (props) => {
 
                   <button onClick={openAccountModal} type="button">
                     {padAddress(props.swAddress)}
-                    {account.displayBalance
-                      ? ` (${account.displayBalance})`
+                    {props.balance
+                      ? ` (${props.balance})`
                       : ''}
                   </button>
                 </div>

@@ -2,6 +2,8 @@ import { createContainer } from 'unstated-next';
 import { useState } from 'react';
 function useData() {
     const [address, setSmartWalletAddress] = useState('');
+    const [balance, setBalance] = useState('');
+    const [loading, setLoading] = useState(false)
     const [isWalletSplitted, setIsWalletSplitted] = useState(false);
     const [allocations, setAllocations] = useState({
         fnf: '0',
@@ -27,7 +29,26 @@ function useData() {
         setSmartWalletAddress(_address);
     };
 
-    return { allocations, setAllocationData, isWalletSplitted, assignIsWalletSplitted, address, saveSmartWalletAddress };
+    const setLoadingState = (_isloading) => {
+        setLoading(_isloading);
+    };
+
+    const saveBalance = (_bal) => {
+        setBalance(_bal);
+    };
+
+    return {
+        allocations,
+        setAllocationData,
+        isWalletSplitted,
+        assignIsWalletSplitted,
+        address,
+        saveSmartWalletAddress,
+        loading,
+        setLoadingState,
+        balance,
+        saveBalance
+    };
 }
 
 const Global = createContainer(useData);

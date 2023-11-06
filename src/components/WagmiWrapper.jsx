@@ -27,17 +27,6 @@ const WagmiWrapper = ({ children }) => {
   );
 
   const connectors = connectorsForWallets([
-    //There's a bug in zerodev's enhanceWalletWithAAConnector that doesn't automatically update the state whenever the user changes network
-    //It's only when you refresh, it shows you wrong network
-    // {
-    //   groupName: "EOA wrapped with AA",
-    //   wallets: [
-    //    enhanceWalletWithAAConnector(
-    //       metaMaskWallet({ projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID, chains }),
-    //      { projectId: process.env.NEXT_PUBLIC_PROJECT_ID_SEPOLIA}
-    //     )
-    //   ]
-    // },
     {
       groupName: "EOA",
       wallets: [

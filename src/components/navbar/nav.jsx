@@ -4,22 +4,28 @@ import Link from 'next/link';
 import styles from './nav.module.css';
 import { usePathname } from 'next/navigation';
 import CustomRainbowkitBtn from '../rainbowkit/rainbowkit-connect-button';
-import { ECDSAProvider, getRPCProviderOwner } from '@zerodev/sdk'
+import { ECDSAProvider, getRPCProviderOwner } from '@zerodev/sdk';
+import { sepolia } from 'viem/chains';
 import { useAccount } from 'wagmi';
 import { useContainer } from 'unstated-next';
 import Global from '@/state/global';
 import GetStartedButton from '../getStartedButton/getStartedButton';
+import { createPublicClient, formatEther, http } from 'viem';
+
 
 const NavBar = () => {
 
-  const [ swAddress, setAddress] = useState("loading...");
   const { address, isConnected } = useAccount();
-  const [loading, setLoading] = useState(false)
   const pathname = usePathname();
-  const { saveSmartWalletAddress } = useContainer(Global);
+  const { saveSmartWalletAddress, setLoadingState, loading, saveBalance, balance, address: swAddress } = useContainer(Global);
+  const transport = http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`)
+  const publicClient = createPublicClient({
+    chain: sepolia,
+    transport,
+  })
 
   useEffect(() => {
-    setLoading(true);
+    setLoadingState(true)
     const createWallet = async () => {
       try {
           const ecdsaProvider = await ECDSAProvider.init({
@@ -27,9 +33,10 @@ const NavBar = () => {
           owner: getRPCProviderOwner(window.ethereum),
         })
         let swAddress = await ecdsaProvider.getAddress()
-        setAddress(swAddress)
+        let bal = await publicClient.getBalance({address: swAddress});
+        saveBalance(formatEther(bal+'')); 
         saveSmartWalletAddress(swAddress);
-        setLoading(false);
+        setLoadingState(false)
       } catch(error) {
         console.log(error)
       }
@@ -44,7 +51,10 @@ const NavBar = () => {
     "/createWallet": <button>Create Wallet</button>
   }
 
-  const btnText = paths[pathname] ?? <CustomRainbowkitBtn swAddress={loading ? "loading..." : swAddress} />
+  const btnText = paths[pathname] ?? <CustomRainbowkitBtn 
+    swAddress={loading ? "loading..." : swAddress}
+    balance={balance}  
+    />
 
   return (
     <nav className={styles.NavBar}>
