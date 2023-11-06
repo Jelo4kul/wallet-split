@@ -2,19 +2,16 @@
 
 import { configureChains, WagmiConfig, createConfig } from 'wagmi';
 import { sepolia } from 'wagmi/chains';
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 import { SocialWalletConnector } from '@zerodev/wagmi';
 import React from 'react';
 import Global from '@/state/global';
 // RainbowKit
-import { connectorsForWallets, RainbowKitProvider, getDefaultWallets } from '@rainbow-me/rainbowkit';
+import { connectorsForWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import {
-  metaMaskWallet,
-  rainbowWallet,
+  metaMaskWallet
 } from '@rainbow-me/rainbowkit/wallets';
-import { enhanceWalletWithAAConnector } from '@zerodev/wagmi/rainbowkit';
 
 let socialConnector;
 //NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID

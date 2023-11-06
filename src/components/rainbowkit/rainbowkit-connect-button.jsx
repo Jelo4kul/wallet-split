@@ -1,6 +1,5 @@
 import { padAddress } from '@/utils/utils';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { ECDSAProvider, getRPCProviderOwner } from '@zerodev/sdk';
 
 const CustomRainbowkitBtn = (props) => {
 

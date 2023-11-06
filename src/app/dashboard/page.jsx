@@ -1,14 +1,12 @@
 'use client';
 import Image from 'next/image';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styles from './page.module.css';
-import { http } from 'viem';
 import { useContainer } from 'unstated-next';
 import Global from '@/state/global';
 
 
 const Dashboard = () => {
-const transport = http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`)
 
 const { allocations, setAllocationData,  balance  } = useContainer(Global);
 

@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import styles from './nav.module.css';
 import { usePathname } from 'next/navigation';
@@ -24,8 +24,6 @@ const NavBar = () => {
     chain: sepolia,
     transport,
   })
-
-
 
 
   useEffect(() => {
