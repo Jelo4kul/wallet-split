@@ -1,0 +1,9 @@
+.gtStrtdButton {
+    background-color: black;
+    color: white;
+    padding: 19px;
+    border: none;
+    width: 162px;
+    cursor: pointer;
+    text-align: center;
+  }

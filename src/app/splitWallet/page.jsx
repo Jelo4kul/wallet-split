@@ -37,10 +37,10 @@ const WalletSplit = () => {
   const [error, setError] = useState({
     invalidAddress: false
   })
-  const { isWalletSplitted, assignIsWalletSplitted } = useContainer(Global);
+  const { isWalletSplitted, assignIsWalletSplitted, address: swAddress } = useContainer(Global);
   const router = useRouter();
   const { openConnectModal } = useConnectModal();
- const { address: swAddress, connector, isConnected, isConnecting } = useAccount();
+ const { isConnected } = useAccount();
   const transport = http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`)
   const publicClient = createPublicClient({
     chain: sepolia,

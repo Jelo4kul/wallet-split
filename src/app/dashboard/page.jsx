@@ -19,8 +19,8 @@ const publicClient = createPublicClient({
     chain: sepolia,
     transport,
 });
-const { address: swAddress, connector, isConnected, isConnecting } = useAccount();
-const { allocations, setAllocationData } = useContainer(Global);
+
+const { allocations, setAllocationData, address: swAddress  } = useContainer(Global);
 
 useEffect(() => {
     const getSmartWalletBalance = async () => {

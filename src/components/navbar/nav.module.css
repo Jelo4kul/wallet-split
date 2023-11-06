@@ -23,10 +23,9 @@
     flex: 1;
     display: flex;
     justify-content: flex-end;
-    margin-right: 400px;
 }
 
-.auth > button {
+.auth  button {
     background-color: black;
     color: white;
     padding: 14px;

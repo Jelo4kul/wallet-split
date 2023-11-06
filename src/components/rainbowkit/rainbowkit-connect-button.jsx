@@ -1,5 +1,6 @@
+import { padAddress } from '@/utils/utils';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { ECDSAProvider, getRPCProviderOwner } from '@zerodev/sdk'
+import { ECDSAProvider, getRPCProviderOwner } from '@zerodev/sdk';
 
 const CustomRainbowkitBtn = (props) => {
 
@@ -83,7 +84,7 @@ const CustomRainbowkitBtn = (props) => {
                   </button>
 
                   <button onClick={openAccountModal} type="button">
-                    {props.swAddress}
+                    {padAddress(props.swAddress)}
                     {account.displayBalance
                       ? ` (${account.displayBalance})`
                       : ''}

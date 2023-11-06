@@ -3,17 +3,20 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import styles from './nav.module.css';
 import { usePathname } from 'next/navigation';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 import CustomRainbowkitBtn from '../rainbowkit/rainbowkit-connect-button';
 import { ECDSAProvider, getRPCProviderOwner } from '@zerodev/sdk'
 import { useAccount } from 'wagmi';
+import { useContainer } from 'unstated-next';
+import Global from '@/state/global';
+import GetStartedButton from '../getStartedButton/getStartedButton';
 
 const NavBar = () => {
 
   const [ swAddress, setAddress] = useState("loading...");
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
   const [loading, setLoading] = useState(false)
   const pathname = usePathname();
+  const { saveSmartWalletAddress } = useContainer(Global);
 
   useEffect(() => {
     setLoading(true);
@@ -23,7 +26,9 @@ const NavBar = () => {
           projectId: process.env.NEXT_PUBLIC_PROJECT_ID_SEPOLIA,
           owner: getRPCProviderOwner(window.ethereum),
         })
-        setAddress(await ecdsaProvider.getAddress())
+        let swAddress = await ecdsaProvider.getAddress()
+        setAddress(swAddress)
+        saveSmartWalletAddress(swAddress);
         setLoading(false);
       } catch(error) {
         console.log(error)
@@ -35,7 +40,7 @@ const NavBar = () => {
 
 
   const paths = {
-    "/":  <button>Get Started</button>,
+    "/":  <GetStartedButton isConnected={isConnected} />,
     "/createWallet": <button>Create Wallet</button>
   }
 
