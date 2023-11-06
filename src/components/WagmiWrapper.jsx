@@ -14,7 +14,6 @@ import {
 } from '@rainbow-me/rainbowkit/wallets';
 
 let socialConnector;
-//NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID
 const WagmiWrapper = ({ children }) => {
 
 
