@@ -1,14 +1,37 @@
 'use client';
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './page.module.css';
 import { useContainer } from 'unstated-next';
 import Global from '@/state/global';
+import DepositModal from '@/components/depositModal/depositModal';
 
 
 const Dashboard = () => {
 
-const { allocations, setAllocationData,  balance  } = useContainer(Global);
+    const [isDepositClicked, setisDepositClicked] = useState(false);
+    const { allocations, setAllocationData,  balance, address: swAddress  } = useContainer(Global);
+    const handleDepositClicked = () => {
+        // if(!isConnected) {
+        //   openConnectModal();
+        // } else {
+        setisDepositClicked(true)
+        //}
+    };
+
+    const handleOverlayClicked = (event) => {
+        //here we are using event delegation to prevent the child element from closing the modal.
+        //The modal should only be closed by clicking the parent element
+        //In summary we want to activate the onClick event on the parent and not the child element
+        //event.target returns the parent element. event.currentTarget returns the exact child element that was clicked.
+        if(event.target ==  event.currentTarget){
+        closeModal();
+        }
+    }
+
+    const closeModal = () => {
+        setisDepositClicked(false)
+    }
 
   return (
     <div className={styles.dashboard}>
@@ -24,7 +47,7 @@ const { allocations, setAllocationData,  balance  } = useContainer(Global);
                         height={20}
                         alt="Deposit"
                     /> 
-                    <p className={styles.actionLabel}>Deposit</p>
+                    <p onClick={handleDepositClicked} className={styles.actionLabel}>Deposit</p>
                 </div>
                 <div className={styles.actionsBox}>
                     <Image 
@@ -81,6 +104,12 @@ const { allocations, setAllocationData,  balance  } = useContainer(Global);
                 </div>
             </section>
         </section>
+        <DepositModal 
+            isDepositClicked={isDepositClicked} 
+            handleOverlayClicked={handleOverlayClicked} 
+            closeModal={closeModal} 
+            swAddress={swAddress} 
+        />
         {/* <section>
             <p>Your Transactions</p>
         </section> */}

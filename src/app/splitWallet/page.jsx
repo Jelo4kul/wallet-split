@@ -11,6 +11,7 @@ import { useAccount } from 'wagmi';
 import { ECDSAProvider, getRPCProviderOwner } from '@zerodev/sdk';
 import { useRouter } from 'next/navigation';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
+import DepositModal from '@/components/depositModal/depositModal';
 
 const SplitStates = {
     UNSPLIT: "Split",
@@ -300,31 +301,12 @@ const WalletSplit = () => {
             )}
        
         </section>
-        {isDepositClicked && 
-             <div className={styles.overlay} onClick={handleOverlayClicked}>
-                <div className={styles.modal}>
-                    <div className={styles.closeModal} onClick={closeModal}>
-                        <Image 
-                            src="/close-circle.svg"
-                            width={40}
-                            height={40}
-                            alt="Split wallet"
-                            className={styles.closeModalImage}
-                        />
-                    </div>
-                    <p className={styles.sendEthLabel}>Send Eth to this Address</p>
-                    <div className={styles.addressAndIcon}>
-                        <p>{swAddress}</p>
-                        <Image 
-                            src="/deposit.svg"
-                            width={20}
-                            height={20}
-                            alt="Split wallet"
-                        />
-                 </div>
-             </div>
-             </div>
-        }  
+        <DepositModal 
+            isDepositClicked={isDepositClicked} 
+            handleOverlayClicked={handleOverlayClicked} 
+            closeModal={closeModal} 
+            swAddress={swAddress} 
+        />
     </section>
   )
 }
