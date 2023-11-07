@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 const DashboardLayout = ({ children }) => {
 
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [windowWidth, setWindowWidth] = useState(0);
 
     const handleResize = () => {
         setWindowWidth(window.innerWidth);
@@ -14,6 +14,7 @@ const DashboardLayout = ({ children }) => {
       };
 
       useEffect(() => {
+        setWindowWidth(window.innerWidth);
         // Add a resize event listener when the component mounts
         window.addEventListener('resize', handleResize);
     
@@ -22,12 +23,7 @@ const DashboardLayout = ({ children }) => {
           window.removeEventListener('resize', handleResize);
         };
       }, []); // Empty dependency array to run the effect only once when the component mounts
-    
-      useEffect(() => {
-        setWindowWidth(window.innerWidth);
-        console.log(windowWidth)
-      }, [windowWidth]); 
-    
+   
 
   return (
     <div className={styles.layout}>

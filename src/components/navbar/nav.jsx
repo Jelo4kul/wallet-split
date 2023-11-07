@@ -27,7 +27,7 @@ const NavBar = () => {
 
 
   useEffect(() => {
-    setLoadingState(true)
+    setLoadingState(true);
     const createWallet = async () => {
       try {
         const ecdsaProvider = await ECDSAProvider.init({
