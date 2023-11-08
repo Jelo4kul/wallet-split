@@ -3,6 +3,7 @@ import { useState } from 'react';
 function useData() {
     const [address, setSmartWalletAddress] = useState('');
     const [balance, setBalance] = useState('');
+    const [reloadSwitch, setNavReload] = useState(false);
     const [loading, setLoading] = useState(false)
     const [isWalletSplitted, setIsWalletSplitted] = useState(false);
     const [allocations, setAllocations] = useState({
@@ -37,6 +38,11 @@ function useData() {
         setBalance(_bal);
     };
 
+
+    const triggerNavReload = (_switch) => {
+        setNavReload(_switch);
+    };
+
     return {
         allocations,
         setAllocationData,
@@ -47,7 +53,9 @@ function useData() {
         loading,
         setLoadingState,
         balance,
-        saveBalance
+        saveBalance,
+        reloadSwitch,
+        triggerNavReload
     };
 }
 

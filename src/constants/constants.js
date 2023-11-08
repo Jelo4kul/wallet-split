@@ -17,3 +17,8 @@ export const selector = '0x92b4dfd2';
 export const validatorABI = parseAbi([
     'function getAllocations(address _kernel) external view returns(address, address, uint256, uint256, uint256)'
 ]);
+export const SendStates = {
+    NOTSENT: "Send",
+    SENDING: "Sending...",
+    SENT: "Sent"
+}
