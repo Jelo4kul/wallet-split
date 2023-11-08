@@ -24,34 +24,30 @@ const SendModal = ({
                                 className={styles.closeModalImage}
                             />
                         </div>
-                        <p className={styles.sendEthLabel}>Send Eth to this Address</p>
-                        <div className={styles.addressAndIcon}>
-                            <Image 
-                                src="/deposit.svg"
-                                width={20}
-                                height={20}
-                                alt="Split wallet"
-                            />
-                        </div>
+  
                         <form onSubmit={handleSubmit} className={styles.sendForm}>
-                            <label htmlFor="send">Input the address you want to send money to</label>
-                            <input
-                                required
-                                type="text"
-                                id="address"
-                                name="address"
-                                value={sendData.address}
-                                onChange={handleInputChange}
-                            />
-                             <label htmlFor="send">Input the amount</label>
-                            <input
-                                required
-                                type="number"
-                                id="amount"
-                                name="amount"
-                                value={sendData.amount}
-                                onChange={handleInputChange}
-                            />
+                            <div className={styles.labelAndInput}>
+                                <label htmlFor="send">Input the address you want to send money to</label>
+                                <input
+                                    required
+                                    type="text"
+                                    id="address"
+                                    name="address"
+                                    value={sendData.address}
+                                    onChange={handleInputChange}
+                                />
+                            </div>                     
+                            <div className={styles.labelAndInput}>
+                                <label htmlFor="send">Input the amount</label>
+                                <input
+                                    required
+                                    type="number"
+                                    id="amount"
+                                    name="amount"
+                                    value={sendData.amount}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
                              <button onClick={handleSendAction}>{sendState}</button>
                         </form>
                     </div>

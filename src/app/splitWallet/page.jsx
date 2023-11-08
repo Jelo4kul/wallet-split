@@ -139,8 +139,8 @@ const WalletSplit = () => {
   };
 
   const handleSplitClicked = async () => {
-   // setisDepositClicked(true)
-  setisSplitClicked(true);
+        // setisDepositClicked(true)
+        setisSplitClicked(true);
   };
 
   const handleSplitAction = () => {

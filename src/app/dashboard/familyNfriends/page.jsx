@@ -4,10 +4,26 @@ import React from 'react';
 import styles from './page.module.css';
 import { useContainer } from 'unstated-next';
 import Global from '@/state/global';
+import DashboardData from '@/state/dashboard';
+import SendModal from '@/components/sendModal/sendModal';
 
 const FamilyAndFriends = () => {
 
-  const { allocations, setAllocationData } = useContainer(Global);
+  const { isSendClicked, 
+    setIsSendClicked, 
+    handleOverlayClicked, 
+    closeModal, 
+    handleSubmit, 
+    handleInputChange, 
+    sendData, 
+    handleSendAction, 
+    sendState} = useContainer(DashboardData);
+
+    const { allocations } = useContainer(Global);
+
+    const handleSendClick = () => {
+    setIsSendClicked(true);
+    }
 
   return (
     <div className={styles.fnf}>
@@ -24,7 +40,7 @@ const FamilyAndFriends = () => {
                         height={18}
                         alt="Send"
                     /> 
-                    <p className={styles.actionLabel}>Send</p>
+                    <p onClick={handleSendClick} className={styles.actionLabel}>Send</p>
                 </div>
                 <div className={styles.actionsBox}>
                     <Image 
@@ -50,6 +66,16 @@ const FamilyAndFriends = () => {
                 <p>No recent transations</p>
             </div>
         </section>
+        <SendModal 
+            isSendClicked={isSendClicked} 
+            handleOverlayClicked={handleOverlayClicked}
+            closeModal={closeModal} 
+            handleSubmit={handleSubmit} 
+            handleInputChange={handleInputChange} 
+            sendData={sendData} 
+            handleSendAction={handleSendAction} 
+            sendState={sendState}
+        />
     </div>
   )
 }

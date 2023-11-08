@@ -17,7 +17,7 @@
   
     background-color: white;
     width: 500px;
-    height: 200px;
+
     z-index: 4;
     padding: 20px;
 }
@@ -28,16 +28,38 @@
     cursor: pointer;
 }
 
-.overlay > .modal > .sendEthLabel {
-    align-self: center;
+.overlay > .modal > .sendForm {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
 }
 
-.overlay > .modal  > .addressAndIcon {
+.overlay > .modal > .sendForm > .labelAndInput {
     display: flex;
-    align-items: center;
-    gap: 30px;
-    align-self: center;
+    flex-direction: column;
+    gap: 12px;
 }
+
+.overlay > .modal > .sendForm > .labelAndInput  > input {
+    height: 50px;
+    border:  0.2px solid rgb(189, 189, 189);
+    font-size: 20px;
+    font-weight: 400;
+    padding: 0 14px;
+}
+
+.overlay > .modal > .sendForm  button{
+    background-color: black;
+    color: white;
+    padding: 19px;
+    border: none;
+    width: 162px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    align-self:flex-end;
+}
+
 
 @media only screen and (max-width: 768px) {
 

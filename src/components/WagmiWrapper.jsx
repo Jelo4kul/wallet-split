@@ -12,6 +12,7 @@ import { connectorsForWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit
 import {
   metaMaskWallet
 } from '@rainbow-me/rainbowkit/wallets';
+import DashboardData from '@/state/dashboard';
 
 let socialConnector;
 const WagmiWrapper = ({ children }) => {
@@ -48,11 +49,13 @@ const WagmiWrapper = ({ children }) => {
   return (
     // Wrap in global state provider (at layout level)
     <Global.Provider>
-      <WagmiConfig config={config}>
-        <RainbowKitProvider chains={chains} modalSize={'compact'}>
-         {children}
-        </RainbowKitProvider>
-      </WagmiConfig>
+      <DashboardData.Provider>
+        <WagmiConfig config={config}>
+          <RainbowKitProvider chains={chains} modalSize={'compact'}>
+          {children}
+          </RainbowKitProvider>
+        </WagmiConfig>
+      </DashboardData.Provider>
     </Global.Provider>
  
   )
