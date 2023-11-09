@@ -9,16 +9,18 @@ export const kernelABI = parseAbi([
 ]);
 
 export const execAddress = '0x2F8D2EF350bA3259977158caB11fE57599B293eE';
-export const validatorAddress = '0x8E1232e9d68f3ee9F681a51637079D78b67CA244';
+export const validatorAddress = "0xdE0fb58C5714d920ba33d6F86ccEAfFC2Fe7dfc8";
 export const openseaAddress = '0x00000000000000ADc04C56Bf30aC9d3c0aAF14dC';
 export const validUntil = 0; // is the timestamp at which the enabledData expires. When set to 0, it never expires
 export const validAfter = 0; //is the timestamp at which the enabledData becomes active. When set to 0, it's immediately active
 export const selector = '0x92b4dfd2';
 export const validatorABI = parseAbi([
-    'function getAllocations(address _kernel) external view returns(address, address, uint256, uint256, uint256)'
+    'function getAllocations(address _kernel) external view returns(address, address, uint256, uint256, uint256, bytes)'
 ]);
 export const SendStates = {
     NOTSENT: "Send",
     SENDING: "Sending...",
     SENT: "Sent"
 }
+//:
+//tuple(address,address,uint256,uint256,uint256,bytes): 

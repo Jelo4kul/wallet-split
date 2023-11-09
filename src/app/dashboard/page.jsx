@@ -10,7 +10,7 @@ import DepositModal from '@/components/depositModal/depositModal';
 const Dashboard = () => {
 
     const [isDepositClicked, setisDepositClicked] = useState(false);
-    const { allocations, setAllocationData,  balance, address: swAddress  } = useContainer(Global);
+    const { allocations,  balance, address: swAddress  } = useContainer(Global);
     const handleDepositClicked = () => {
         // if(!isConnected) {
         //   openConnectModal();

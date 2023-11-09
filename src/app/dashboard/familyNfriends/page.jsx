@@ -9,16 +9,7 @@ import SendModal from '@/components/sendModal/sendModal';
 
 const FamilyAndFriends = () => {
 
-  const { isSendClicked, 
-    setIsSendClicked, 
-    handleOverlayClicked, 
-    closeModal, 
-    handleSubmit, 
-    handleInputChange, 
-    sendData, 
-    handleSendAction, 
-    sendState} = useContainer(DashboardData);
-
+    const { isSendClicked, setIsSendClicked } = useContainer(DashboardData);
     const { allocations } = useContainer(Global);
 
     const handleSendClick = () => {
@@ -68,13 +59,7 @@ const FamilyAndFriends = () => {
         </section>
         <SendModal 
             isSendClicked={isSendClicked} 
-            handleOverlayClicked={handleOverlayClicked}
-            closeModal={closeModal} 
-            handleSubmit={handleSubmit} 
-            handleInputChange={handleInputChange} 
-            sendData={sendData} 
-            handleSendAction={handleSendAction} 
-            sendState={sendState}
+            tabId = {0}
         />
     </div>
   )

@@ -10,7 +10,7 @@ function useData() {
         fnf: '0',
         miscellaneous: '0',
         nfts: '0',
-        fnfAddresses: []
+        fnfAddresses: ''
     })
 
     const setAllocationData = (_allocData) => {

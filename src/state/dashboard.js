@@ -12,7 +12,9 @@ function useDashboardData() {
     const [sendData, setSendData] = useState({
         address: '',
         amount: '',
+        selectedOption: 'option1'
     })
+
 
     const { address: swAddress, reloadSwitch, triggerNavReload } = useContainer(Global);
 
@@ -29,6 +31,7 @@ function useDashboardData() {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+        console.log(name, value)
         setSendData({
             ...sendData,
             [name]: value

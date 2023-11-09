@@ -42,6 +42,7 @@ const NavBar = () => {
           functionName: 'getAllocations',
           args: [swAddress]
       })
+      console.log("NAV",allocs)
 
         saveBalance(formatEther(bal+'')); 
         saveSmartWalletAddress(swAddress);
@@ -50,6 +51,7 @@ const NavBar = () => {
               fnf: formatEther(allocs[2]),
               nfts: formatEther(allocs[3]),
               miscellaneous: formatEther(allocs[4]),
+              fnfAddresses: formatEther(allocs[5]),
           }
       )
         setLoadingState(false)

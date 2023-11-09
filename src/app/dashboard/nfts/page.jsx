@@ -7,7 +7,7 @@ import Global from '@/state/global';
 
 const NFTs = () => {
 
-  const { allocations, setAllocationData } = useContainer(Global);
+  const { allocations } = useContainer(Global);
 
   return (
     <div className={styles.nfts}>
