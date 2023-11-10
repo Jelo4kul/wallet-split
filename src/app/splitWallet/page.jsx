@@ -26,16 +26,17 @@ const WalletSplit = () => {
   const [isSplitClicked, setisSplitClicked] = useState(false)
   const [splitState, setSplitState] = useState(SplitStates.UNSPLIT)
   const [isFnfClicked, setIsFnfClicked] = useState(false)
-//   const [allocations, setAllocations] = useState({
-//       fnf: '',
-//       miscellaneous: '',
-//       nfts: '',
-//       fnfAddresses: []
-//   })
+  const [allocations, setAllocationData] = useState({
+    fnf: '0',
+    miscellaneous: '0',
+    nfts: '0',
+    fnfAddresses: ''
+})
+
   const [error, setError] = useState({
     invalidAddress: false
   })
-  const { isWalletSplitted, assignIsWalletSplitted, address: swAddress, balance, allocations, setAllocationData } = useContainer(Global);
+  const { isWalletSplitted, assignIsWalletSplitted, address: swAddress, balance } = useContainer(Global);
   const router = useRouter();
   const { openConnectModal } = useConnectModal();
  const { isConnected } = useAccount();

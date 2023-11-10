@@ -22,5 +22,11 @@ export const SendStates = {
     SENDING: "Sending...",
     SENT: "Sent"
 }
+
+export const TabIds = {
+    fnf: 0,
+    misc: 1,
+    nfts: 2
+}
 //:
 //tuple(address,address,uint256,uint256,uint256,bytes): 

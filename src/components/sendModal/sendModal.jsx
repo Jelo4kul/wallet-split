@@ -3,6 +3,8 @@ import Image from 'next/image';
 import { useContainer } from 'unstated-next';
 import DashboardData from '@/state/dashboard';
 import Global from '@/state/global';
+import { TabIds } from '@/constants/constants';
+import { splitAddresses } from '@/utils/utils';
 
 const MiscTab = ({ 
     handleOverlayClicked, 
@@ -48,7 +50,7 @@ const MiscTab = ({
                         onChange={handleInputChange}
                     />
                 </div>
-                <button onClick={handleSendAction}>{sendState}</button>
+                <button onClick={() => handleSendAction(TabIds.misc)}>{sendState}</button>
             </form>
         </div>
     </div>
@@ -62,7 +64,8 @@ const FnFTab = ({
     handleInputChange, 
     sendData, 
     handleSendAction, 
-    sendState }) => {
+    sendState,
+    fnfAddresses }) => {
  return (
     <div className={styles.overlay} onClick={handleOverlayClicked}>
         <div className={styles.modal}>
@@ -79,9 +82,10 @@ const FnFTab = ({
             <form onSubmit={handleSubmit} className={styles.sendForm}>
                 <label htmlFor="selectedOption">Select your Family and Friend Address</label>
                 <select name='selectedOption' value={sendData.selectedOption} onChange={handleInputChange}>
-                    <option value="option1">0x79d899379844d35a1a1f5d51d3185dd821f44dc1</option>
-                    <option value="option2">0x79d899379844d35a1a1f5d51d3185dd821f44dc1</option>
-                    <option value="option3">0x79d899379844d35a1a1f5d51d3185dd821f44dc1</option>
+                    <option value="">Choose an Address</option>
+                    {fnfAddresses.map(address => (
+                         <option value={`0x${address}`}>{`0x${address}`}</option>
+                    ))}
                 </select>                    
                 <div className={styles.labelAndInput}>
                     <label htmlFor="amount">Input the amount</label>
@@ -94,7 +98,7 @@ const FnFTab = ({
                         onChange={handleInputChange}
                     />
                 </div>
-                <button onClick={handleSendAction}>{sendState}</button>
+                <button onClick={() => handleSendAction(TabIds.fnf)}>{sendState}</button>
             </form>
         </div>
     </div>
@@ -116,8 +120,7 @@ const SendModal = ({ isSendClicked, tabId }) => {
             sendState} = useContainer(DashboardData);
 
             const { allocations } = useContainer(Global);
-
-            console.log(allocations.fnfAddresses)
+            const listOfFnfAddresses = splitAddresses(allocations.fnfAddresses)
 
             const properties = {
                 handleOverlayClicked: handleOverlayClicked,
@@ -126,7 +129,8 @@ const SendModal = ({ isSendClicked, tabId }) => {
                 handleInputChange: handleInputChange,
                 sendData: sendData,
                 handleSendAction: handleSendAction,
-                sendState: sendState
+                sendState: sendState,
+                fnfAddresses: listOfFnfAddresses
             }
 
             const tabs = [   <FnFTab {...properties}/>,  <MiscTab {...properties}/>   ];

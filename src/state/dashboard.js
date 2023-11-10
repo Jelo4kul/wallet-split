@@ -1,6 +1,6 @@
 import { createContainer } from 'unstated-next';
 import { useState } from 'react';
-import { executorABI, SendStates, validatorAddress } from '@/constants/constants';
+import { executorABI, SendStates, TabIds, validatorAddress } from '@/constants/constants';
 import { encodeFunctionData, parseEther } from 'viem';
 import { ECDSAProvider, getRPCProviderOwner, ValidatorMode } from '@zerodev/sdk';
 import { useContainer } from 'unstated-next';
@@ -12,7 +12,7 @@ function useDashboardData() {
     const [sendData, setSendData] = useState({
         address: '',
         amount: '',
-        selectedOption: 'option1'
+        selectedOption: ''
     })
 
 
@@ -42,9 +42,17 @@ function useDashboardData() {
         e.preventDefault();
     }
 
-    const handleSendAction = () => {
+    const handleSendAction = (_tabId) => {
+        console.log(sendData)
         const amount = '0x' + parseEther(sendData.amount).toString(16).padStart(64, '0');
-        makeTransfer(sendData.address, amount, "");
+        if (_tabId == TabIds.misc) {
+            makeTransfer(sendData.address, amount, "");
+        } else if (_tabId == TabIds.fnf) {
+            if (!sendData.selectedOption) {
+                throw new Error("Please select an address")
+            }
+            makeTransfer(sendData.selectedOption, amount, "");
+        }
     }
 
     const makeTransfer = async (_recipient, _amount, _data) => {
@@ -63,10 +71,11 @@ function useDashboardData() {
 
 
         setSendState(SendStates.SENDING);
-
+        console.log(swAddress, _recipient)
         //This is the UserOperation Calldata
         //Set the executor and validator for a specific function selector
         const { hash } = await ecdsaProvider.sendUserOperation({
+
             target: swAddress,
             data: encodeFunctionData({
                 abi: executorABI,

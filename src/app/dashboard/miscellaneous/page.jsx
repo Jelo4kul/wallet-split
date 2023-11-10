@@ -6,6 +6,7 @@ import { useContainer } from 'unstated-next';
 import Global from '@/state/global';
 import SendModal from '@/components/sendModal/sendModal';
 import DashboardData from '@/state/dashboard';
+import { TabIds } from '@/constants/constants';
 
 const Miscellaneous = () => {
 
@@ -59,7 +60,7 @@ const Miscellaneous = () => {
         </section>
         <SendModal 
             isSendClicked={isSendClicked}
-            tabId = {1}
+            tabId = {TabIds.misc}
         />
     </div>
   )

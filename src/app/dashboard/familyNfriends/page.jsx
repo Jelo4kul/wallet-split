@@ -6,6 +6,7 @@ import { useContainer } from 'unstated-next';
 import Global from '@/state/global';
 import DashboardData from '@/state/dashboard';
 import SendModal from '@/components/sendModal/sendModal';
+import { TabIds } from '@/constants/constants';
 
 const FamilyAndFriends = () => {
 
@@ -59,7 +60,7 @@ const FamilyAndFriends = () => {
         </section>
         <SendModal 
             isSendClicked={isSendClicked} 
-            tabId = {0}
+            tabId = {TabIds.fnf}
         />
     </div>
   )
