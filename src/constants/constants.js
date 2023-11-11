@@ -28,5 +28,12 @@ export const TabIds = {
     misc: 1,
     nfts: 2
 }
+
+export const SplitStates = {
+    UNSPLIT: "Split",
+    SPLITTING: "Splitting wallet...",
+    SPLITTED: "Wallet Splitted"
+}
+
 //:
 //tuple(address,address,uint256,uint256,uint256,bytes): 

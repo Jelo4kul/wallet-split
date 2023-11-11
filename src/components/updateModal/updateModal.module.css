@@ -14,54 +14,27 @@
 .overlay > .modal {
     display: flex;
     flex-direction: column;
-  
     background-color: white;
     width: 500px;
-
     z-index: 4;
     padding: 20px;
 }
 
-.overlay > .modal > .closeBox {
+.overlay > .modal > .closeModal {
     justify-self: flex-end;
     align-self: flex-end;
     cursor: pointer;
 }
 
-.overlay > .modal > .sendForm {
+.overlay > .modal  > .addressAndIcon {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     gap: 30px;
+    align-self: center;
 }
 
-.overlay > .modal > .sendForm > .labelAndInput {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.overlay > .modal > .sendForm > .labelAndInput  > input {
-    height: 50px;
-    border:  0.2px solid rgb(189, 189, 189);
-    font-size: 20px;
-    font-weight: 400;
-    padding: 0 14px;
-}
-
-.overlay > .modal > .sendForm  button{
-    background-color: black;
-    color: white;
-    padding: 19px;
-    border: none;
-    width: 162px;
-    font-size: 16px;
-    cursor: pointer;
+.updateLabel {
     text-align: center;
-    align-self:flex-end;
-}
-
-.overlay select {
-    padding: 20px 5px;
 }
 
 
@@ -71,7 +44,7 @@
         width: 70%;
     }
     
-    .overlay > .modal > .closeBox > .closeModalImage{
+    .overlay > .modal > .closeModal > .closeModalImage{
        width: 25px;
        height: 25px;
     }

@@ -1,5 +1,8 @@
 import { createContainer } from 'unstated-next';
 import { useState } from 'react';
+import { SplitStates } from '@/constants/constants';
+
+
 function useData() {
     const [address, setSmartWalletAddress] = useState('');
     const [balance, setBalance] = useState('');
@@ -11,6 +14,20 @@ function useData() {
         miscellaneous: '0',
         nfts: '0',
         fnfAddresses: ''
+    })
+    const [splitFormState, setSplitFormState] = useState({
+        isSplitClicked: false,
+        splitState: SplitStates.UNSPLIT,
+        isFnfClicked: false,
+        formData: {
+            fnf: '0',
+            miscellaneous: '0',
+            nfts: '0',
+            fnfAddresses: ''
+        },
+        error: {
+            invalidAddress: false
+        }
     })
 
     const setAllocationData = (_allocData) => {
@@ -43,6 +60,8 @@ function useData() {
         setNavReload(_switch);
     };
 
+
+
     return {
         allocations,
         setAllocationData,
@@ -55,7 +74,9 @@ function useData() {
         balance,
         saveBalance,
         reloadSwitch,
-        triggerNavReload
+        triggerNavReload,
+        splitFormState,
+        setSplitFormState
     };
 }
 

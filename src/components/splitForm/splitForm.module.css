@@ -1,0 +1,92 @@
+
+.allocForm {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 70%;
+}
+
+.allocForm > .error {
+    display: flex;
+    padding: 20px;
+    background-color: red;
+    color: white;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.allocForm > .fnfMainContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.bottom > .allocForm > .fnfMainContainer > p {
+    
+}
+
+.allocForm > .fnfMainContainer > .fnfSubContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    border:  0.2px solid rgb(189, 189, 189);
+}
+
+.allocForm > .fnfMainContainer > .fnfSubContainer >.addContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: rgb(126, 126, 226);
+    margin-top: 16px;
+}
+
+.allocForm > .fnfMainContainer > .fnfSubContainer >.addContainer p, .addIcon {
+    cursor: pointer;
+    margin: 0;
+} 
+
+.allocForm > .fnfMainContainer > .fnfSubContainer textarea  {
+    border:  0.2px solid rgb(189, 189, 189);
+    font-family: 'Raleway', sans-serif;
+    color: black;
+    padding: 10px;
+    line-height:25px;
+    font-size: 20px;
+    font-weight: 400;
+    margin-top: 16px;
+}
+
+.allocForm > .fnfMainContainer > .fnfSubContainer textarea::placeholder {
+    font-weight: 300;
+    font-size: 16px;
+}
+
+.allocForm  .labelAndInput {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.allocForm .labelAndInput > input {
+    height: 50px;
+    border:  0.2px solid rgb(189, 189, 189);
+    font-size: 20px;
+    font-weight: 400;
+    padding: 0 14px;
+}
+
+.allocForm  button{
+    background-color: black;
+    color: white;
+    padding: 19px;
+    border: none;
+    width: 162px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.allocForm > button {
+   width: 100%;
+}
+

@@ -5,11 +5,14 @@ import styles from './page.module.css';
 import { useContainer } from 'unstated-next';
 import Global from '@/state/global';
 import DepositModal from '@/components/depositModal/depositModal';
+import Link from 'next/link';
+import UpdateModal from '@/components/updateModal/updateModal';
 
 
 const Dashboard = () => {
 
     const [isDepositClicked, setisDepositClicked] = useState(false);
+    const [isUpdateClicked, setisUpdateClicked] = useState(false);
     const { allocations,  balance, address: swAddress  } = useContainer(Global);
     const handleDepositClicked = () => {
         // if(!isConnected) {
@@ -17,6 +20,10 @@ const Dashboard = () => {
         // } else {
         setisDepositClicked(true)
         //}
+    };
+
+    const handleUpdateClicked = () => {
+        setisUpdateClicked(true)
     };
 
     const handleOverlayClicked = (event) => {
@@ -31,6 +38,7 @@ const Dashboard = () => {
 
     const closeModal = () => {
         setisDepositClicked(false)
+        setisUpdateClicked(false)
     }
 
   return (
@@ -49,7 +57,7 @@ const Dashboard = () => {
                     /> 
                     <p onClick={handleDepositClicked} className={styles.actionLabel}>Deposit</p>
                 </div>
-                <div className={styles.actionsBox}>
+                {/* <div className={styles.actionsBox}>
                     <Image 
                         src="/send.svg"
                         width={20}
@@ -57,7 +65,7 @@ const Dashboard = () => {
                         alt="Send"
                     /> 
                     <p className={styles.actionLabel}>Send</p>
-                </div>
+                </div> */}
                 <div className={styles.actionsBox}>
                     <Image 
                         src="/update.svg"
@@ -65,7 +73,7 @@ const Dashboard = () => {
                         height={20}
                         alt="Update"
                     /> 
-                    <p className={styles.actionLabel}>Update</p>
+                    <p onClick={handleUpdateClicked} className={styles.actionLabel}>Update</p>
                 </div>
             </div>
         </section>
@@ -80,7 +88,10 @@ const Dashboard = () => {
                         alt="Family and Friends"
                     />
                     <p className={styles.subWalletTag}>Family and Friends</p>
-                    <p className={styles.subWalletValue}>{allocations.fnf}<span>ETH</span></p>
+                    <div className={styles.balanceAndMore}>
+                        <p className={styles.subWalletValue}>{allocations.fnf}<span>ETH</span></p>
+                        <Link  href='/dashboard/familyNfriends' className={styles.view}>View</Link>
+                    </div>
                 </div>
                 <div className={styles.subWalletContainer}>
                     <Image 
@@ -90,7 +101,10 @@ const Dashboard = () => {
                         alt="Miscellaneous"
                     />
                     <p className={styles.subWalletTag}>Miscellaneous</p>
-                    <p className={styles.subWalletValue}>{allocations.miscellaneous}<span>ETH</span></p>
+                    <div className={styles.balanceAndMore}>
+                        <p className={styles.subWalletValue}>{allocations.miscellaneous}<span>ETH</span></p>
+                        <Link  href='/dashboard/miscellaneous' className={styles.view}>View</Link>
+                    </div>
                 </div>
                 <div className={styles.subWalletContainer}>
                     <Image 
@@ -100,7 +114,10 @@ const Dashboard = () => {
                         alt="NFTs"
                     />
                     <p className={styles.subWalletTag}>NFTs</p>
-                    <p className={styles.subWalletValue}>{allocations.nfts}<span>ETH</span></p>
+                    <div className={styles.balanceAndMore}>
+                        <p className={styles.subWalletValue}>{allocations.nfts}<span>ETH</span></p>
+                        <Link  href='/dashboard/nfts' className={styles.view}>View</Link>
+                    </div>
                 </div>
             </section>
         </section>
@@ -110,6 +127,12 @@ const Dashboard = () => {
             closeModal={closeModal} 
             swAddress={swAddress} 
         />
+        <UpdateModal
+            isDepositClicked={isUpdateClicked} 
+            handleOverlayClicked={handleOverlayClicked} 
+            closeModal={closeModal} 
+            swAddress={swAddress} 
+         />
         {/* <section>
             <p>Your Transactions</p>
         </section> */}

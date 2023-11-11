@@ -81,14 +81,29 @@
     font-size: 15px;
 }
 
-.dashboard > .subWalletSection > .subWalletLayout >.subWalletContainer > .subWalletValue {
+.dashboard > .subWalletSection > .subWalletLayout >.subWalletContainer > .balanceAndMore {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dashboard > .subWalletSection > .subWalletLayout >.subWalletContainer > .balanceAndMore > .subWalletValue {
     font-size: 30px;
     margin: 0;
 }
 
-.dashboard > .subWalletSection > .subWalletLayout >.subWalletContainer > .subWalletValue > span {
+.dashboard > .subWalletSection > .subWalletLayout >.subWalletContainer > .balanceAndMore > .subWalletValue > span {
     font-size: 14px;
     margin-left: 4px;
+}
+
+.dashboard > .subWalletSection > .subWalletLayout >.subWalletContainer > .balanceAndMore > .view {
+    font-size: 16px;
+    color: black;
+    margin: 0;
+    background-color: rgb(0,0,0, 0.1);
+    padding: 10px 15px;
 }
 
 .overlay {
