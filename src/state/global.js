@@ -6,6 +6,7 @@ import { SplitStates } from '@/constants/constants';
 function useData() {
     const [address, setSmartWalletAddress] = useState('');
     const [balance, setBalance] = useState('');
+    const [publicClient, setPublicClient] = useState(null);
     const [reloadSwitch, setNavReload] = useState(false);
     const [loading, setLoading] = useState(false)
     const [isWalletSplitted, setIsWalletSplitted] = useState(false);
@@ -76,7 +77,9 @@ function useData() {
         reloadSwitch,
         triggerNavReload,
         splitFormState,
-        setSplitFormState
+        setSplitFormState,
+        publicClient,
+        setPublicClient
     };
 }
 

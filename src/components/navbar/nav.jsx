@@ -18,7 +18,7 @@ const NavBar = () => {
 
   const { address, isConnected } = useAccount();
   const pathname = usePathname();
-  const { saveSmartWalletAddress, setLoadingState, loading, saveBalance, balance, address: swAddress, setAllocationData, reloadSwitch } = useContainer(Global);
+  const { saveSmartWalletAddress, setLoadingState, loading, saveBalance, balance, address: swAddress, setAllocationData, reloadSwitch, setPublicClient } = useContainer(Global);
   const transport = http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`)
   const publicClient = createPublicClient({
     chain: sepolia,
@@ -46,6 +46,7 @@ const NavBar = () => {
 
         saveBalance(formatEther(bal+'')); 
         saveSmartWalletAddress(swAddress);
+        setPublicClient(publicClient);
         setAllocationData(
           {
               fnf: formatEther(allocs[2]),

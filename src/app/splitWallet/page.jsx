@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import DepositModal from '@/components/depositModal/depositModal';
 import SplitForm from '@/components/splitForm/splitForm';
+import { formatEther } from 'viem';
 
 
 const WalletSplit = () => {
@@ -18,7 +19,7 @@ const WalletSplit = () => {
   //this state is necessary to prevent re-hydration error
   const [isClient, setIsClient] = useState(false)
   const [isDepositClicked, setisDepositClicked] = useState(false)
-  const { isWalletSplitted, assignIsWalletSplitted, address: swAddress, balance, setSplitFormState, splitFormState } = useContainer(Global);
+  const { isWalletSplitted, assignIsWalletSplitted, address: swAddress, balance, saveBalance, setSplitFormState, splitFormState, publicClient } = useContainer(Global);
   const router = useRouter();
   const { openConnectModal } = useConnectModal();
  const { isConnected } = useAccount();
@@ -40,6 +41,17 @@ const WalletSplit = () => {
         }
     }
     checkIfWalletisSpliited();
+
+    const intervalId = setInterval(async () => {
+       const bal = await publicClient.getBalance({address: swAddress});
+       if(bal > 0){
+           clearInterval(intervalId);
+           saveBalance(formatEther(bal+''));
+       }
+      }, 5000);
+  
+      // Cleanup the interval when the component is unmounted
+      return () => clearInterval(intervalId);
   }, [swAddress]);
 
   const handleDepositClicked = () => {
@@ -66,12 +78,17 @@ const WalletSplit = () => {
       //event.target returns the parent element. event.currentTarget returns the exact child element that was clicked.
       if(event.target ==  event.currentTarget){
         closeModal();
+        closeDepositModal();
       }
   }
   
   const handleCopy = () => {
     // Copy the selected text to the clipboard
     document.execCommand('copy');
+  }
+
+  const closeDepositModal = () => {
+      setisDepositClicked(false);
   }
 
     const closeModal = () => {
@@ -139,7 +156,7 @@ const WalletSplit = () => {
         <DepositModal 
             isDepositClicked={isDepositClicked} 
             handleOverlayClicked={handleOverlayClicked} 
-            closeModal={closeModal} 
+            closeModal={closeDepositModal} 
             swAddress={swAddress} 
         />
     </section>

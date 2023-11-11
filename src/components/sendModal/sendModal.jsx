@@ -83,8 +83,8 @@ const FnFTab = ({
                 <label htmlFor="selectedOption">Select your Family and Friend Address</label>
                 <select name='selectedOption' value={sendData.selectedOption} onChange={handleInputChange}>
                     <option value="">Choose an Address</option>
-                    {fnfAddresses.map(address => (
-                         <option value={`0x${address}`}>{`0x${address}`}</option>
+                    {fnfAddresses.map((address, index) => (
+                         <option key={index} value={`0x${address}`}>{`0x${address}`}</option>
                     ))}
                 </select>                    
                 <div className={styles.labelAndInput}>
@@ -133,7 +133,7 @@ const SendModal = ({ isSendClicked, tabId }) => {
                 fnfAddresses: listOfFnfAddresses
             }
 
-            const tabs = [   <FnFTab {...properties}/>,  <MiscTab {...properties}/>   ];
+            const tabs = [   <FnFTab key={TabIds.fnf} {...properties}/>,  <MiscTab key={TabIds.misc} {...properties}/>   ];
 
   return (isSendClicked && tabs[tabId])
 }

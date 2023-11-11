@@ -6,13 +6,13 @@ import { isAddress, parseEther, encodeFunctionData } from 'viem';
 import { execAddress, kernelABI, openseaAddress, selector, validAfter, validatorABI, validatorAddress, validUntil, SplitStates } from '@/constants/constants';
 import { useContainer } from 'unstated-next';
 import Global from '@/state/global';
+import { arrToBytes } from '@/utils/utils';
+
 
 
 const SplitForm = ({ splitState, style}) => {
 
-    console.log("splitform")
-
-    const {address, splitFormState, setSplitFormState} = useContainer(Global)
+    const {address, splitFormState, setSplitFormState, setAllocationData} = useContainer(Global)
 
 
     const encodeCardObject = ({ ownerAddress, openseaAddress, familyNFrenAlloc, nftAlloc, generalAlloc, familyNfrens }) => {
@@ -87,6 +87,15 @@ const SplitForm = ({ splitState, style}) => {
               ...prevState,
               splitState: SplitStates.SPLITTED
             }));
+
+            setAllocationData(
+                {
+                    fnf: splitFormState.formData.fnf,
+                    miscellaneous: splitFormState.formData.miscellaneous,
+                    nfts: splitFormState.formData.nfts,
+                    fnfAddresses: arrToBytes(familyNfrens)
+                }
+            )
   
             
             return new Promise((resolve) => {
