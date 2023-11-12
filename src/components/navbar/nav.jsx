@@ -81,7 +81,7 @@ const NavBar = () => {
     <nav className={styles.NavBar}>
         <Link className={styles.logo} href="/">WalletSplit</Link>
         <div className={styles.center_info}>
-            <p>How it works</p>
+          <p><Link href="/howItWorks">How it works</Link></p>
         </div>
         <div className={styles.auth}>
             {btnText}

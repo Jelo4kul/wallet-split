@@ -6,13 +6,13 @@ import { isAddress, parseEther, encodeFunctionData } from 'viem';
 import { execAddress, kernelABI, openseaAddress, selector, validAfter, validatorABI, validatorAddress, validUntil, SplitStates } from '@/constants/constants';
 import { useContainer } from 'unstated-next';
 import Global from '@/state/global';
-import { arrToBytes } from '@/utils/utils';
+import { arrToBytes, divideWithNonZeroPrecision } from '@/utils/utils';
 
 
 
 const SplitForm = ({ splitState, style}) => {
 
-    const {address, splitFormState, setSplitFormState, setAllocationData} = useContainer(Global)
+    const {address, balance, splitFormState, setSplitFormState, setAllocationData} = useContainer(Global)
 
 
     const encodeCardObject = ({ ownerAddress, openseaAddress, familyNFrenAlloc, nftAlloc, generalAlloc, familyNfrens }) => {
@@ -131,11 +131,27 @@ const SplitForm = ({ splitState, style}) => {
         e.preventDefault();
       }
 
+      const useDefaultHandler = () => {
+          const alloc = divideWithNonZeroPrecision(balance)
+        setSplitFormState((prevState) => ({
+            ...prevState,
+            formData: {
+                ...prevState.formData,
+                fnf: alloc,
+                miscellaneous: alloc,
+                nfts: alloc
+            },
+        }));
+      }
+
   return (
     <form onSubmit={handleSubmit} className={styles.allocForm} style={style}>
         {splitFormState.error.invalidAddress && <div className={styles.error}>Invalid Family and Friend Address</div>}
         <div className={styles.fnfMainContainer}>
-            <p>Family and Friends</p>
+            <div className={styles.fnfAndDefault}>
+                <p>Family and Friends</p>
+                <div onClick={useDefaultHandler}>Use default</div>
+            </div>
             <div className={styles.fnfSubContainer}>
                 <div className={styles.labelAndInput}>
                     <label htmlFor="fnf">Allocation for Family and Friends:</label>

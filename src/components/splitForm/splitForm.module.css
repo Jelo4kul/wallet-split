@@ -21,6 +21,18 @@
     flex-direction: column;
 }
 
+.allocForm > .fnfMainContainer .fnfAndDefault {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.allocForm > .fnfMainContainer .fnfAndDefault > div{
+    cursor: pointer;
+    padding-bottom: 3px;
+    border-bottom: 2px solid black;
+}
+
 .bottom > .allocForm > .fnfMainContainer > p {
     
 }

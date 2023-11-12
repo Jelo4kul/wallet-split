@@ -19,6 +19,10 @@
     cursor: pointer;
 }
 
+.center_info  > p a {
+    color: black;
+}
+ 
 .auth {
     flex: 1;
     display: flex;
