@@ -16,7 +16,7 @@ const HowItWorks = () => {
                 /> 
                  <div>
                     <p className={styles.actionLabel}>Create Wallet</p>
-                    <p className={styles.actionExplainerLabel}>ry. Lor text evebled itsunic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop pu</p>
+                    <p className={styles.actionExplainerLabel}>Before you experience the full capabilities of wallet split, you have to create a smart wallet </p>
                 </div>
             </div>
             <Image 
@@ -24,6 +24,7 @@ const HowItWorks = () => {
                     width={20}
                     height={20}
                     alt="forward arrow"
+                    className={styles.forwardArrow}
                 /> 
             <div className={styles.actionContainer}>
                 <Image 
@@ -34,7 +35,7 @@ const HowItWorks = () => {
                 /> 
                 <div>
                     <p className={styles.actionLabel}>Split Wallet</p>
-                    <p className={styles.actionExplainerLabel}>ry. Lor text eer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop pu</p>
+                    <p className={styles.actionExplainerLabel}>After creating a smart wallet, the next step to take is to split your wallet into mini-wallets. Each mini-wallet acts on its own and have a specific purpose.</p>
                 </div>
             </div>
             <Image 
@@ -42,6 +43,7 @@ const HowItWorks = () => {
                     width={20}
                     height={20}
                     alt="forward arrow"
+                    className={styles.forwardArrow}
                 /> 
             <div className={styles.actionContainer}>
                 <Image 
@@ -52,7 +54,7 @@ const HowItWorks = () => {
                 /> 
                 <div>
                     <p className={styles.actionLabel}>Spend from Sub-wallets</p>
-                    <p className={styles.actionExplainerLabel}>ryo make a type t onlre recently with desktop pu</p>
+                    <p className={styles.actionExplainerLabel}>Now that you've splitted your wallet, you can now spend from your mini-wallets.</p>
                 </div>
             </div>
         </section>

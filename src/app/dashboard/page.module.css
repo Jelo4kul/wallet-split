@@ -149,11 +149,6 @@
 
 @media only screen and (max-width: 768px) { 
 
-    .dashboard {
-
-      
-    }
-
     .dashboard > .subWalletSection > .subWalletLabel {
         font-size: 18px;
         margin-top: 50px;
