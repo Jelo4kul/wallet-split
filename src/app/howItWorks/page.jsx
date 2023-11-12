@@ -54,7 +54,7 @@ const HowItWorks = () => {
                 /> 
                 <div>
                     <p className={styles.actionLabel}>Spend from Sub-wallets</p>
-                    <p className={styles.actionExplainerLabel}>Now that you've splitted your wallet, you can now spend from your mini-wallets.</p>
+                    <p className={styles.actionExplainerLabel}>Now that you have splitted your wallet, you can now spend from your mini-wallets.</p>
                 </div>
             </div>
         </section>

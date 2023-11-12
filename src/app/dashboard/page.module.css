@@ -185,6 +185,9 @@
     .actionsBox {
 
     }
+    .view {
+        display: none;
+    }
 
     .actionsBox > .actionLabel {
         font-size: 14px;
