@@ -18,6 +18,7 @@ const WalletSplit = () => {
  
   //this state is necessary to prevent re-hydration error
   const [isClient, setIsClient] = useState(false)
+  const [isCopied, setIsCopied] = useState(false);
   const [isDepositClicked, setisDepositClicked] = useState(false)
   const { isWalletSplitted, assignIsWalletSplitted, address: swAddress, balance, saveBalance, setSplitFormState, splitFormState, publicClient } = useContainer(Global);
   const router = useRouter();
@@ -83,8 +84,11 @@ const WalletSplit = () => {
   }
   
   const handleCopy = () => {
-    // Copy the selected text to the clipboard
-    document.execCommand('copy');
+    navigator.clipboard.writeText(swAddress);
+    setIsCopied(true);
+    setTimeout(() => {
+        setIsCopied(false);
+    }, 700);
   }
 
   const closeDepositModal = () => {
@@ -105,7 +109,7 @@ const WalletSplit = () => {
                 <div className={styles.walletAddressAndIcon}>
                     <p className={styles.walletAddress}>{isClient ? swAddress : "loading..." }</p>
                     <Image 
-                        src="/copy.svg"
+                        src={isCopied ? '/copied.svg' : '/copy.svg'}
                         width={20}
                         height={20}
                         alt="copy"
@@ -128,7 +132,7 @@ const WalletSplit = () => {
                 ) : 
                 (
                         
-                    balance === '0' ? 
+                    balance !== '0' ? 
                         <>
                             <Image 
                                 src="/empty-wallet.svg"
@@ -158,6 +162,8 @@ const WalletSplit = () => {
             handleOverlayClicked={handleOverlayClicked} 
             closeModal={closeDepositModal} 
             swAddress={swAddress} 
+            handleCopy = {handleCopy}
+            isCopied = {isCopied}
         />
     </section>
   )

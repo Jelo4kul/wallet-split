@@ -1,7 +1,7 @@
 import styles from './depositModal.module.css';
 import Image from 'next/image';
 
-const DepositModal = ({ isDepositClicked, handleOverlayClicked, closeModal, swAddress }) => {
+const DepositModal = ({ isDepositClicked, handleOverlayClicked, closeModal, swAddress, handleCopy, isCopied }) => {
   return (
       <>
            {isDepositClicked && 
@@ -20,10 +20,12 @@ const DepositModal = ({ isDepositClicked, handleOverlayClicked, closeModal, swAd
                         <div className={styles.addressAndIcon}>
                             <p>{swAddress}</p>
                             <Image 
-                                src="/deposit.svg"
+                                src={isCopied ? '/copied-black.svg' : '/copy-black.svg'}
                                 width={20}
                                 height={20}
                                 alt="Split wallet"
+                                className={styles.copyImage}
+                                onClick={handleCopy}
                             />
                         </div>
                     </div>

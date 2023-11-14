@@ -39,6 +39,10 @@
     align-self: center;
 }
 
+.overlay > .modal  > .addressAndIcon .copyImage {
+    cursor: pointer;
+}
+
 @media only screen and (max-width: 768px) {
 
     .overlay > .modal {
