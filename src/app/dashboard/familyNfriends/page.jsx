@@ -7,14 +7,19 @@ import Global from '@/state/global';
 import DashboardData from '@/state/dashboard';
 import SendModal from '@/components/sendModal/sendModal';
 import { TabIds } from '@/constants/constants';
+import NewFnfModal from '@/components/newFnfModal/newFnfModal';
 
 const FamilyAndFriends = () => {
 
-    const { isSendClicked, setIsSendClicked } = useContainer(DashboardData);
+    const { isSendClicked, setIsSendClicked, isUpdateFnfClicked, setIsUpdateFnfClicked } = useContainer(DashboardData);
     const { allocations } = useContainer(Global);
 
     const handleSendClick = () => {
-    setIsSendClicked(true);
+        setIsSendClicked(true);
+    }
+
+    const handleUpdateFnfClick = () => {
+        setIsUpdateFnfClicked(true);
     }
 
   return (
@@ -36,12 +41,12 @@ const FamilyAndFriends = () => {
                 </div>
                 <div className={styles.actionsBox}>
                     <Image 
-                        src="/update.svg"
+                        src="/add-black.svg"
                         width={18}
                         height={18}
-                        alt="Update"
+                        alt="add"
                     /> 
-                    <p className={styles.actionLabel}>Update</p>
+                    <p onClick={handleUpdateFnfClick} className={styles.actionLabel}>Add Family Member or Friend</p>
                 </div>
             </div>
         </section>
@@ -61,6 +66,9 @@ const FamilyAndFriends = () => {
         <SendModal 
             isSendClicked={isSendClicked} 
             tabId = {TabIds.fnf}
+        />
+        <NewFnfModal
+            isUpdateFnfClicked={isUpdateFnfClicked}
         />
     </div>
   )

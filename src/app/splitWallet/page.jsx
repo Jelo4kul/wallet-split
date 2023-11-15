@@ -132,7 +132,7 @@ const WalletSplit = () => {
                 ) : 
                 (
                         
-                    balance !== '0' ? 
+                    balance === '0' ? 
                         <>
                             <Image 
                                 src="/empty-wallet.svg"

@@ -34,7 +34,7 @@ const Miscellaneous = () => {
                     /> 
                     <p onClick={handleSendClick} className={styles.actionLabel}>Send</p>
                 </div>
-                <div className={styles.actionsBox}>
+                {/* <div className={styles.actionsBox}>
                     <Image 
                         src="/update.svg"
                         width={20}
@@ -42,7 +42,7 @@ const Miscellaneous = () => {
                         alt="Update"
                     /> 
                     <p className={styles.actionLabel}>Update</p>
-                </div>
+                </div> */}
             </div>
         </section>
         <section className={styles.transacSec}>

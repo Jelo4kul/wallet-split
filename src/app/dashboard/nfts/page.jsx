@@ -26,7 +26,7 @@ const NFTs = () => {
                     /> 
                     <p className={styles.actionLabel}>Purchase Nft</p>
                 </div>
-                <div className={styles.actionsBox}>
+                {/* <div className={styles.actionsBox}>
                     <Image 
                         src="/update.svg"
                         width={20}
@@ -34,7 +34,7 @@ const NFTs = () => {
                         alt="Update"
                     /> 
                     <p className={styles.actionLabel}>Update</p>
-                </div>
+                </div> */}
             </div>
         </section>
         <section className={styles.transacSec}>
