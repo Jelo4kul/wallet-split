@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { useContainer } from 'unstated-next';
 import Global from '@/state/global';
@@ -13,6 +13,7 @@ const FamilyAndFriends = () => {
 
     const { isSendClicked, setIsSendClicked, isUpdateFnfClicked, setIsUpdateFnfClicked } = useContainer(DashboardData);
     const { allocations } = useContainer(Global);
+    const [isFnfAddressesUpdated, setIsFnfAddresseUpdated] = useState(false)
 
     const handleSendClick = () => {
         setIsSendClicked(true);
@@ -20,7 +21,16 @@ const FamilyAndFriends = () => {
 
     const handleUpdateFnfClick = () => {
         setIsUpdateFnfClicked(true);
+        setIsFnfAddresseUpdated(false);
     }
+
+    
+    useEffect(() => {
+      //refresh component
+      console.log("james",allocations);
+      setIsFnfAddresseUpdated(true);
+    }, [allocations])
+    
 
   return (
     <div className={styles.fnf}>
@@ -67,9 +77,11 @@ const FamilyAndFriends = () => {
             isSendClicked={isSendClicked} 
             tabId = {TabIds.fnf}
         />
-        <NewFnfModal
+        {!isFnfAddressesUpdated &&    
+         <NewFnfModal
             isUpdateFnfClicked={isUpdateFnfClicked}
-        />
+         />
+        }
     </div>
   )
 }

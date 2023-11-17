@@ -51,5 +51,14 @@ export const divideWithNonZeroPrecision = (dividend) => {
 }
 
 
+export const encodeCardObject = ({ ownerAddress, openseaAddress, familyNFrenAlloc, nftAlloc, generalAlloc, familyNfrens }) => {
+    let packedFnf = '';
+    for (let fnf of familyNfrens) {
+        packedFnf += fnf.substring(2);
+    }
+    const encodedData = ownerAddress + openseaAddress.substring(2) + familyNFrenAlloc + nftAlloc + generalAlloc + packedFnf;
+    return encodedData;
+}
+
 
 

@@ -6,7 +6,7 @@ import { isAddress, parseEther, encodeFunctionData } from 'viem';
 import { execAddress, kernelABI, openseaAddress, selector, validAfter, validatorABI, validatorAddress, validUntil, SplitStates } from '@/constants/constants';
 import { useContainer } from 'unstated-next';
 import Global from '@/state/global';
-import { arrToBytes, divideWithNonZeroPrecision } from '@/utils/utils';
+import { arrToBytes, divideWithNonZeroPrecision, encodeCardObject } from '@/utils/utils';
 
 
 
@@ -14,16 +14,6 @@ const SplitForm = ({ splitState, style}) => {
 
     const {address, balance, splitFormState, setSplitFormState, setAllocationData} = useContainer(Global)
 
-
-    const encodeCardObject = ({ ownerAddress, openseaAddress, familyNFrenAlloc, nftAlloc, generalAlloc, familyNfrens }) => {
-        let packedFnf = '';
-        for (let fnf of familyNfrens) {
-            packedFnf += fnf.substring(2);
-        }
-        const encodedData = ownerAddress + openseaAddress.substring(2) + familyNFrenAlloc + nftAlloc + generalAlloc + packedFnf;
-        return encodedData;
-      }
-      
       const setExecution = async () => {
             //TODO: Split wallet can't be called before creating a wallet
     

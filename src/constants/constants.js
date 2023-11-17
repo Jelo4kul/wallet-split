@@ -15,7 +15,7 @@ export const validUntil = 0; // is the timestamp at which the enabledData expire
 export const validAfter = 0; //is the timestamp at which the enabledData becomes active. When set to 0, it's immediately active
 export const selector = '0x92b4dfd2';
 export const validatorABI = parseAbi([
-    'function enable(bytes calldata _data) external payable override',
+    'function enable(bytes calldata _data) external payable',
     'function getAllocations(address _kernel) external view returns(address, address, uint256, uint256, uint256, bytes)'
 ]);
 export const SendStates = {

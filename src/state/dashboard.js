@@ -1,10 +1,11 @@
 import { createContainer } from 'unstated-next';
 import { useState } from 'react';
 import { executorABI, SendStates, TabIds, validatorABI, validatorAddress } from '@/constants/constants';
-import { encodeFunctionData, parseEther } from 'viem';
+import { encodeFunctionData, formatEther, isAddress, parseEther } from 'viem';
 import { ECDSAProvider, getRPCProviderOwner, ValidatorMode } from '@zerodev/sdk';
 import { useContainer } from 'unstated-next';
 import Global from '@/state/global';
+import { arrToBytes, encodeCardObject } from '@/utils/utils';
 
 function useDashboardData() {
     const [isSendClicked, setIsSendClicked] = useState(false);
@@ -13,11 +14,12 @@ function useDashboardData() {
     const [sendData, setSendData] = useState({
         address: '',
         amount: '',
-        selectedOption: ''
+        selectedOption: '',
+        fnfAddresses: ''
     })
 
 
-    const { address: swAddress, reloadSwitch, triggerNavReload } = useContainer(Global);
+    const { address: swAddress, reloadSwitch, triggerNavReload, publicClient, setAllocationData } = useContainer(Global);
 
 
     const handleOverlayClicked = (event) => {
@@ -45,86 +47,75 @@ function useDashboardData() {
     }
 
     const handleFnfUpdateAction = () => {
-
+        setEnable()
     }
 
 
-    // const encodeCardObject = ({ ownerAddress, openseaAddress, familyNFrenAlloc, nftAlloc, generalAlloc, familyNfrens }) => {
-    //     let packedFnf = '';
-    //     for (let fnf of familyNfrens) {
-    //         packedFnf += fnf.substring(2);
-    //     }
-    //     const encodedData = ownerAddress + openseaAddress.substring(2) + familyNFrenAlloc + nftAlloc + generalAlloc + packedFnf;
-    //     return encodedData;
-    //   }
+    const setEnable = async () => {
+        //TODO: Split wallet can't be called before creating a wallet
+        const owner = getRPCProviderOwner(window.ethereum);
+        const delimiter = /[\s,]+/;
+        const familyNfrens = sendData.fnfAddresses?.split(delimiter);
+        const allAddresesValid = familyNfrens.every(addr => isAddress(addr));
+
+        if (!allAddresesValid) {
+            throw new Error("Invalid Address")
+        }
+
+        const allocs = await publicClient.readContract({
+            address: validatorAddress,
+            abi: validatorABI,
+            functionName: 'getAllocations',
+            args: [swAddress]
+        })
+
+        const cardObject = {
+            ownerAddress: allocs[0],
+            openseaAddress: allocs[1],
+            familyNFrenAlloc: parseEther(formatEther(allocs[2])).toString(16).padStart(64, '0'),
+            nftAlloc: parseEther(formatEther(allocs[3])).toString(16).padStart(64, '0'),
+            generalAlloc: parseEther(formatEther(allocs[4])).toString(16).padStart(64, '0'),
+            familyNfrens: familyNfrens
+        };
+
+        console.log(allocs)
+        console.log(cardObject.familyNFrenAlloc, cardObject.nftAlloc)
+
+        const enableData = encodeCardObject(cardObject);
+        console.log(enableData)
 
 
-    // const setExecution = async () => {
-    //     //TODO: Split wallet can't be called before creating a wallet
-    //     const owner = getRPCProviderOwner(window.ethereum);
-    //     const delimiter = /[\s,]+/;
-    //     const familyNfrens = splitFormState.formData?.fnfAddresses?.split(delimiter);
-    //     const allAddresesValid = familyNfrens.every(addr => isAddress(addr));
+        const ecdsaProvider = await ECDSAProvider.init({
+            projectId: process.env.NEXT_PUBLIC_PROJECT_ID_SEPOLIA,
+            owner
+        })
 
-    //     if (!allAddresesValid) {
-    //         throw new Error("Invalid Address")
-    //     }
+        //This is the UserOperation Calldata
+        const { hash } = await ecdsaProvider.sendUserOperation({
+            target: validatorAddress,
+            value: 0,
+            data: encodeFunctionData({
+                abi: validatorABI,
+                functionName: 'enable',
+                args: [enableData]
+            })
+        })
 
-    //     const allocs = await publicClient.readContract({
-    //         address: validatorAddress,
-    //         abi: validatorABI,
-    //         functionName: 'getAllocations',
-    //         args: [swAddress]
-    //     })
+        //This will wait for the user operation to be included in a transaction that's been mined.
+        await ecdsaProvider.waitForUserOperationTransaction(hash);
+        console.log(hash);
 
-    //     const cardObject = {
-    //         ownerAddress: allocs[0],
-    //         openseaAddress: allocs[1],
-    //         familyNFrenAlloc: allocs[2],
-    //         nftAlloc: allocs[3],
-    //         generalAlloc: allocs[4],
-    //         familyNfrens: familyNfrens
-    //     };
+        console.log("Family and Friend Address updated");
 
-    //     //     const cardObject = {
-    //     //     ownerAddress: await owner.getAddress(),
-    //     //     openseaAddress: openseaAddress,
-    //     //     familyNFrenAlloc: parseEther(splitFormState.formData.fnf).toString(16).padStart(64, '0'),
-    //     //     nftAlloc: parseEther(splitFormState.formData.nfts).toString(16).padStart(64, '0'),
-    //     //     generalAlloc: parseEther(splitFormState.formData.miscellaneous).toString(16).padStart(64, '0'),
-    //     //     familyNfrens: familyNfrens
-    //     //    };
+        console.log(arrToBytes(familyNfrens));
 
-    //     const enableData = encodeCardObject(cardObject);
+        setAllocationData({ fnfAddresses: arrToBytes(familyNfrens) })
 
-    //     const ecdsaProvider = await ECDSAProvider.init({
-    //         projectId: process.env.NEXT_PUBLIC_PROJECT_ID_SEPOLIA,
-    //         owner
-    //     })
+        return new Promise((resolve) => {
+            resolve(swAddress);
+        });
 
-    //     //This is the UserOperation Calldata
-    //     //Set the executor and validator for a specific function selector
-    //     const { hash } = await ecdsaProvider.sendUserOperation({
-    //         //The address here is the smart contract address after it has been deployed/created
-    //         target: swAddress,
-    //         value: 0,
-    //         data: encodeFunctionData({
-    //             abi: validatorABI,
-    //             functionName: 'enable',
-    //             args: [enableData]
-    //         })
-    //     })
-
-    //     //This will wait for the user operation to be included in a transaction that's been mined.
-    //     await ecdsaProvider.waitForUserOperationTransaction(hash);
-
-    //     console.log("Family and Friend Address updated");
-
-    //     return new Promise((resolve) => {
-    //         resolve(swAddress);
-    //     });
-
-    // }
+    }
 
 
     const handleSendAction = (_tabId) => {
