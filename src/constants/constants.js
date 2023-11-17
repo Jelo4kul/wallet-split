@@ -36,5 +36,11 @@ export const SplitStates = {
     SPLITTED: "Wallet Splitted"
 }
 
+export const FamilyNFrenStates = {
+    NOTADDED: "Add",
+    ADDING: "Adding Family and friends...",
+    ADDED: "Added"
+}
+
 //:
 //tuple(address,address,uint256,uint256,uint256,bytes): 

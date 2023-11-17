@@ -17,7 +17,7 @@ const NewFnfModal = ({ isUpdateFnfClicked }) => {
             handleInputChange, 
             sendData, 
             handleFnfUpdateAction, 
-            sendState} = useContainer(DashboardData);
+            addFnfState} = useContainer(DashboardData);
 
             const { allocations } = useContainer(Global);
             const listOfFnfAddresses = splitAddresses(allocations.fnfAddresses)
@@ -50,7 +50,7 @@ const NewFnfModal = ({ isUpdateFnfClicked }) => {
                                 placeholder="Enter the addresses of your family and friends separated by a comma"
                             /> 
                         </div>                    
-                        <button onClick={handleFnfUpdateAction}>{sendState}</button>
+                        <button onClick={handleFnfUpdateAction}>{addFnfState}</button>
                     </form>
                 </div>
             </div>

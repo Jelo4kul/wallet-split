@@ -1,6 +1,6 @@
 import { createContainer } from 'unstated-next';
 import { useState } from 'react';
-import { executorABI, SendStates, TabIds, validatorABI, validatorAddress } from '@/constants/constants';
+import { executorABI, FamilyNFrenStates, SendStates, TabIds, validatorABI, validatorAddress } from '@/constants/constants';
 import { encodeFunctionData, formatEther, isAddress, parseEther } from 'viem';
 import { ECDSAProvider, getRPCProviderOwner, ValidatorMode } from '@zerodev/sdk';
 import { useContainer } from 'unstated-next';
@@ -11,6 +11,7 @@ function useDashboardData() {
     const [isSendClicked, setIsSendClicked] = useState(false);
     const [isUpdateFnfClicked, setIsUpdateFnfClicked] = useState(false);
     const [sendState, setSendState] = useState(SendStates.NOTSENT);
+    const [addFnfState, setFnfState] = useState(FamilyNFrenStates.NOTADDED);
     const [sendData, setSendData] = useState({
         address: '',
         amount: '',
@@ -31,6 +32,7 @@ function useDashboardData() {
     const closeModal = () => {
         setIsSendClicked(false)
         setIsUpdateFnfClicked(false);
+        setFnfState(FamilyNFrenStates.NOTADDED);
     }
 
     const handleInputChange = (e) => {
@@ -62,6 +64,8 @@ function useDashboardData() {
             throw new Error("Invalid Address")
         }
 
+        setFnfState(FamilyNFrenStates.ADDING);;
+
         const allocs = await publicClient.readContract({
             address: validatorAddress,
             abi: validatorABI,
@@ -75,15 +79,10 @@ function useDashboardData() {
             familyNFrenAlloc: parseEther(formatEther(allocs[2])).toString(16).padStart(64, '0'),
             nftAlloc: parseEther(formatEther(allocs[3])).toString(16).padStart(64, '0'),
             generalAlloc: parseEther(formatEther(allocs[4])).toString(16).padStart(64, '0'),
-            familyNfrens: familyNfrens
+            familyNfrens: [allocs[5], ...familyNfrens]
         };
 
-        console.log(allocs)
-        console.log(cardObject.familyNFrenAlloc, cardObject.nftAlloc)
-
         const enableData = encodeCardObject(cardObject);
-        console.log(enableData)
-
 
         const ecdsaProvider = await ECDSAProvider.init({
             projectId: process.env.NEXT_PUBLIC_PROJECT_ID_SEPOLIA,
@@ -99,17 +98,17 @@ function useDashboardData() {
                 functionName: 'enable',
                 args: [enableData]
             })
-        })
+        });
 
         //This will wait for the user operation to be included in a transaction that's been mined.
         await ecdsaProvider.waitForUserOperationTransaction(hash);
-        console.log(hash);
+
+        setFnfState(FamilyNFrenStates.ADDED);
 
         console.log("Family and Friend Address updated");
 
-        console.log(arrToBytes(familyNfrens));
 
-        setAllocationData({ fnfAddresses: arrToBytes(familyNfrens) })
+        setAllocationData({ fnfAddresses: arrToBytes(cardObject.familyNfrens) })
 
         return new Promise((resolve) => {
             resolve(swAddress);
@@ -119,7 +118,7 @@ function useDashboardData() {
 
 
     const handleSendAction = (_tabId) => {
-        console.log(sendData)
+
         const amount = '0x' + parseEther(sendData.amount).toString(16).padStart(64, '0');
         if (_tabId == TabIds.misc) {
             makeTransfer(sendData.address, amount, "");
@@ -174,6 +173,7 @@ function useDashboardData() {
         isUpdateFnfClicked,
         sendState,
         sendData,
+        addFnfState,
         setIsSendClicked,
         setIsUpdateFnfClicked,
         closeModal,

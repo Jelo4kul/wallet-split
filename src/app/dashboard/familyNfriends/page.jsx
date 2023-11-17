@@ -26,8 +26,6 @@ const FamilyAndFriends = () => {
 
     
     useEffect(() => {
-      //refresh component
-      console.log("james",allocations);
       setIsFnfAddresseUpdated(true);
     }, [allocations])
     
