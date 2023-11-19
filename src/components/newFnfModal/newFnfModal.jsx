@@ -3,8 +3,9 @@ import Image from 'next/image';
 import { useContainer } from 'unstated-next';
 import DashboardData from '@/state/dashboard';
 import Global from '@/state/global';
-import { TabIds } from '@/constants/constants';
+import { FamilyNFrenStates, TabIds } from '@/constants/constants';
 import { splitAddresses } from '@/utils/utils';
+import Spinner from '../spinner/spinner';
 
 
 
@@ -49,8 +50,8 @@ const NewFnfModal = ({ isUpdateFnfClicked }) => {
                                 cols="50"
                                 placeholder="Enter the addresses of your family and friends separated by a comma"
                             /> 
-                        </div>                    
-                        <button onClick={handleFnfUpdateAction}>{addFnfState}</button>
+                        </div>                
+                        <button onClick={handleFnfUpdateAction}>{addFnfState == FamilyNFrenStates.ADDING ? <Spinner /> : addFnfState}</button>
                     </form>
                 </div>
             </div>

@@ -7,6 +7,7 @@ import { execAddress, kernelABI, openseaAddress, selector, validAfter, validator
 import { useContainer } from 'unstated-next';
 import Global from '@/state/global';
 import { arrToBytes, divideWithNonZeroPrecision, encodeCardObject } from '@/utils/utils';
+import Spinner from '../spinner/spinner';
 
 
 
@@ -202,7 +203,7 @@ const SplitForm = ({ splitState, style}) => {
                 onChange={handleInputChange}
             />
         </div>
-        <button onClick={handleSplitAction}>{splitState}</button>
+        <button onClick={handleSplitAction}>{splitState == SplitStates.SPLITTING ? <Spinner /> : splitState}</button>
     </form>
   )
 }
