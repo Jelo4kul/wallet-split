@@ -3,8 +3,9 @@ import Image from 'next/image';
 import { useContainer } from 'unstated-next';
 import DashboardData from '@/state/dashboard';
 import Global from '@/state/global';
-import { TabIds } from '@/constants/constants';
+import { SendStates, TabIds } from '@/constants/constants';
 import { splitAddresses } from '@/utils/utils';
+import Spinner from '../spinner/spinner';
 
 const MiscTab = ({ 
     handleOverlayClicked, 
@@ -98,7 +99,7 @@ const FnFTab = ({
                         onChange={handleInputChange}
                     />
                 </div>
-                <button onClick={() => handleSendAction(TabIds.fnf)}>{sendState}</button>
+                <button onClick={() => handleSendAction(TabIds.fnf)}>{sendState == SendStates.SENDING ? <Spinner /> : sendState}</button>
             </form>
         </div>
     </div>
