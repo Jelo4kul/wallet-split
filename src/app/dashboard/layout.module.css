@@ -38,6 +38,11 @@
     gap: 12px;
 }
 
+.layout .NavMenu:active {
+    font-weight: 600;
+}
+
+
 .layout > .right {
     width: 85%;
 }

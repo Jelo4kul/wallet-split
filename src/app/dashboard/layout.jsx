@@ -7,11 +7,16 @@ import Image from 'next/image';
 const DashboardLayout = ({ children }) => {
 
     const [windowWidth, setWindowWidth] = useState(0);
+    const [activeTab, setActiveTab] = useState("dashboard")
 
     const handleResize = () => {
         setWindowWidth(window.innerWidth);
         console.log(windowWidth)
       };
+
+    const handleTabsClicked = (_tabName) => {
+        setActiveTab(_tabName);
+    }
 
     useEffect(() => {
     setWindowWidth(window.innerWidth);
@@ -24,14 +29,17 @@ const DashboardLayout = ({ children }) => {
     };
     }, []); // Empty dependency array to run the effect only once when the component mounts
 
-
     return (
         <div className={styles.layout}>
             <section className={styles.left}>
                 <nav className={styles.verticalNav}>
                     <ul>
                         <li>
-                            <Link  href='/dashboard' className={styles.NavMenu}>
+                            <Link onClick={() => handleTabsClicked("dashboard")} 
+                                  href='/dashboard' 
+                                  className={styles.NavMenu} 
+                                  style={activeTab == 'dashboard' ? {fontWeight: 600} : {}}
+                            >
                                 <Image 
                                     src="/wallet-dashboard.svg"
                                     width={20}
@@ -42,7 +50,10 @@ const DashboardLayout = ({ children }) => {
                             </Link>
                         </li>
                         <li>
-                            <Link  href='/dashboard/familyNfriends' className={styles.NavMenu}>
+                            <Link onClick={() => handleTabsClicked("familyNfriends")} 
+                                  href='/dashboard/familyNfriends' 
+                                  className={styles.NavMenu} 
+                                  style={activeTab == 'familyNfriends' ? {fontWeight: 600} : {}}>
                                 <Image 
                                     src="/fnf.svg"
                                     width={20}
@@ -53,7 +64,11 @@ const DashboardLayout = ({ children }) => {
                             </Link>
                         </li>
                         <li>
-                            <Link  href='/dashboard/miscellaneous' className={styles.NavMenu}>
+                            <Link onClick={() => handleTabsClicked("miscellaneous")}  
+                                  href='/dashboard/miscellaneous' 
+                                  className={styles.NavMenu}
+                                  style={activeTab == 'miscellaneous' ? {fontWeight: 600} : {}}
+                            >
                                 <Image 
                                     src="/miscellaneous.svg"
                                     width={20}
@@ -64,7 +79,11 @@ const DashboardLayout = ({ children }) => {
                             </Link>
                         </li>
                         <li>
-                            <Link  href='/dashboard/nfts' className={styles.NavMenu}>
+                            <Link onClick={() => handleTabsClicked("nfts")} 
+                                  href='/dashboard/nfts' 
+                                  className={styles.NavMenu}
+                                  style={activeTab == 'nfts' ? {fontWeight: 600} : {}}
+                            >
                                 <Image 
                                     src="/nfts.svg"
                                     width={20}
