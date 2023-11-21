@@ -6,13 +6,20 @@ import { useContainer } from 'unstated-next';
 import Global from '@/state/global';
 import DashboardData from '@/state/dashboard';
 import SendModal from '@/components/sendModal/sendModal';
-import { TabIds } from '@/constants/constants';
+import { entryPointABI, entryPointAddress, TabIds } from '@/constants/constants';
 import NewFnfModal from '@/components/newFnfModal/newFnfModal';
+import { ethers } from 'ethers';
+import Table from '@/components/uicomponents/table';
+
+// const lockieABI = require("./lockieAbi.json");
+// const { BigNumber } = require("@ethersproject/bignumber");
+// require("dotenv").config();
+
 
 const FamilyAndFriends = () => {
 
     const { isSendClicked, setIsSendClicked, isUpdateFnfClicked, setIsUpdateFnfClicked } = useContainer(DashboardData);
-    const { allocations } = useContainer(Global);
+    const { allocations, address } = useContainer(Global);
     const [isFnfAddressesUpdated, setIsFnfAddresseUpdated] = useState(false)
 
     const handleSendClick = () => {
@@ -27,6 +34,16 @@ const FamilyAndFriends = () => {
     
     useEffect(() => {
       setIsFnfAddresseUpdated(true);
+      const fetchTransactions = async () => {
+          const provider = new ethers.JsonRpcProvider(
+            `https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`
+          );
+          const swContract = new ethers.Contract(entryPointAddress, entryPointABI, provider);
+          const userOpFilter = swContract.filters.UserOperationEvent(null, address, null);
+          const useropEvents = await swContract.queryFilter(userOpFilter); 
+          console.log(useropEvents[0]);
+      }
+      fetchTransactions();
     }, [allocations])
     
 
@@ -70,6 +87,7 @@ const FamilyAndFriends = () => {
                 /> 
                 <p>No recent transations</p>
             </div>
+            {/* <Table tableData={tableData(subData)} /> */}
         </section>
         <SendModal 
             isSendClicked={isSendClicked} 
@@ -85,3 +103,47 @@ const FamilyAndFriends = () => {
 }
 
 export default FamilyAndFriends
+
+// const ethers = require("ethers");
+// const lockieABI = require("./lockieAbi.json");
+// const { BigNumber } = require("@ethersproject/bignumber");
+// require("dotenv").config();
+
+// async function main() {
+//     const lockieAddress = "0x4bd5643ac6f66a5237E18bfA7d47cF22f1c9F210";
+//     const provider = new ethers.JsonRpcProvider(
+//         https://eth-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_ETH_GOERLI_KEY}
+//     );
+
+//     const lockieContract = new ethers.Contract(lockieAddress, lockieABI, provider)
+
+//     const userAddress = "0xa2140490Ee061762cB781ad59F16e5268117a846";
+//     const depositFilter = lockieContract.filters.Deposit(null, null, userAddress, null, null);
+//     const withdrawFilter = lockieContract.filters.Withdraw(null, null, userAddress, null);
+
+//     const depositEvents = await lockieContract.queryFilter(depositFilter);
+//     const withdrawEvents = await lockieContract.queryFilter(withdrawFilter);
+
+//     let totalDeposit = BigNumber.from('0');
+//     let totalWithdrawals = BigNumber.from('0');
+
+//     for (let i = 0; i < depositEvents.length; i++) {
+//         let indexedAndNonIndexedData = depositEvents[i].args
+//         totalDeposit = totalDeposit.add(indexedAndNonIndexedData[3])
+//     }
+
+//     for (let i = 0; i < withdrawEvents.length; i++) {
+//         let indexedAndNonIndexedData = depositEvents[i].args
+//         totalWithdrawals = totalWithdrawals.add(indexedAndNonIndexedData[3])
+//     }
+
+//     let currentBalance = totalDeposit.sub(totalWithdrawals);
+
+//     console.log("Total deposit:", totalDeposit.toString())
+//     console.log("Total withdrawals:", totalWithdrawals.toString())
+//     console.log("Current balance:", currentBalance.toString())
+
+// }
+
+// main();
+// // "ethers": "^6.8.1",

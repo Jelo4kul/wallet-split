@@ -4,10 +4,16 @@ export const executorABI = parseAbi([
     'function transfer(address _receipient, uint _amount, address _validator, bytes calldata data) external'
 ]);
 
+
+export const entryPointABI = parseAbi([
+    'event UserOperationEvent(bytes32 indexed userOpHash, address indexed sender, address indexed paymaster, uint256 nonce, bool success, uint256 actualGasCost, uint256 actualGasUsed)'
+]);
+
 export const kernelABI = parseAbi([
     'function setExecution(bytes4 _selector, address _executor, address _validator, uint48 _validUntil, uint48 _validAfter, bytes calldata _enableData) external payable',
 ]);
 
+export const entryPointAddress = '0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789';
 export const execAddress = '0x2F8D2EF350bA3259977158caB11fE57599B293eE';
 export const validatorAddress = "0xdE0fb58C5714d920ba33d6F86ccEAfFC2Fe7dfc8";
 export const openseaAddress = '0x00000000000000ADc04C56Bf30aC9d3c0aAF14dC';
