@@ -13,6 +13,7 @@ export const kernelABI = parseAbi([
     'function setExecution(bytes4 _selector, address _executor, address _validator, uint48 _validUntil, uint48 _validAfter, bytes calldata _enableData) external payable',
 ]);
 
+export const BASE_URL = `https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`;
 export const entryPointAddress = '0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789';
 export const execAddress = '0x2F8D2EF350bA3259977158caB11fE57599B293eE';
 export const validatorAddress = "0xdE0fb58C5714d920ba33d6F86ccEAfFC2Fe7dfc8";
