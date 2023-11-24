@@ -12,17 +12,8 @@ import { ethers, Interface } from 'ethers';
 import Table from '@/components/uicomponents/table';
 import Link from 'next/link';
 import axios from 'axios';
-
-// const { BigNumber } = require("@ethersproject/bignumber");
-
-//TODO: Validate session if user loads the dashboard route
-const rawData = [
-    {img: "/dashboard/p2.svg", name: "0.0001", startDate: "19 May 2023", trader: "0xdF79...dB88", status: "0xd8eb866c19ee424a92c17a7f6b6b4665c47959162eb5ce7ba9f264d189ea3bfe"},
-    {img: "/dashboard/p3.svg", name: "0.0002", startDate: "19 May 2023", trader: "0xdF79...dB88", status: "0xd8eb866c19ee424a92c17a7f6b6b4665c47959162eb5ce7ba9f264d189ea3bfe"},
-    {img: "/dashboard/p4.svg", name: "0.0003", startDate: "19 May 2023", trader: "0xdF79...dB88", status: "0xd8eb866c19ee424a92c17a7f6b6b4665c47959162eb5ce7ba9f264d189ea3bfe"},
-]
-
-//let transactions = [];
+import { formatEther } from 'viem';
+import { splitAddresses } from '@/utils/utils';
 
 
 const FamilyAndFriends = () => {
@@ -30,8 +21,8 @@ const FamilyAndFriends = () => {
     const { isSendClicked, setIsSendClicked, isUpdateFnfClicked, setIsUpdateFnfClicked } = useContainer(DashboardData);
     const { allocations, address } = useContainer(Global);
     const [isFnfAddressesUpdated, setIsFnfAddresseUpdated] = useState(false)
-    const [transactionsFetched, setTransactionsFetched] = useState(false)
-    const [transactions, setTransactions] = useState([])
+    const [transactions, setTransactions] = useState([]);
+    const listOfFnfAddresses = splitAddresses(allocations.fnfAddresses);
 
     const handleSendClick = () => {
         setIsSendClicked(true);
@@ -89,20 +80,17 @@ const FamilyAndFriends = () => {
                     callDataDecoded = iface.decodeFunctionData('transfer', userOpCalldata);
                    
                     txs.push({receipient: callDataDecoded[0], amount: callDataDecoded[1], transaction: td.result.hash})
-                   setTransactions([...transactions, {receipient: callDataDecoded[0], amount: callDataDecoded[1], transaction: td.result.hash}])
                 }
             }
         }
-
+        setTransactions([...txs]);
       }
       fetchTransactions();
-     // setTransactions([...txs]);
-      setTransactionsFetched(true);
     }, [allocations])
     
     const tableData = (subData) => (
         {
-            title: ["Amount", "Receipient", "Date", "Transaction"],
+            title: ["Amount", "Receipient", "Transaction"],
             stylesTh: {   
                 "0": {
                     paddingLeft: "28px",
@@ -122,22 +110,17 @@ const FamilyAndFriends = () => {
     )
 
     const createRows = (subData) => {
-        
-        if(transactionsFetched){
-            console.log("jel",subData)
-        }else{
-            console.log('fetching')
-        }
 
         if(subData.length == 0){
-            return <p>Loading</p>
+            return <p>Loading</p> 
         } else {
-            console.log(typeof subData)
+            console.log( subData)
+     
+          //const fArr  = subData?.filter((address) => listOfFnfAddresses.includes(address));
             return subData?.map(({ receipient, amount, transaction }) => (  
                 [   
-                   <span>{amount}</span>,
+                   <span>{formatEther(amount)}</span>,
                     <span>{receipient}</span>,
-                    <span>{amount}</span>,  
                     <Link href={`https://sepolia.etherscan.io/tx/${transaction}`}>view transaction</Link>,
             
                  ]
@@ -145,12 +128,6 @@ const FamilyAndFriends = () => {
         }
      
      };
-
-    //  if(transactionsFetched){
-    //     console.log(transactions)
-    // }else{
-    //     console.log('fetching...')
-    // }
 
   return (
     <div className={styles.fnf}>
@@ -182,17 +159,20 @@ const FamilyAndFriends = () => {
         </section>
         <section className={styles.transacSec}>
             <p className={styles.recTransacLabel}>Recent Transactions</p>
-            <div className={styles.trasancImageBox}>
-                <Image 
-                    src="/recent-transac.svg"
-                    width={200}
-                    height={200}
-                    alt="Send"
-                    className={styles.transacImage}
-                /> 
-                <p>No recent transations</p>
+            {(transactions.length != 0) ? 
+                <Table tableData={tableData(transactions)} />  
+                : 
+                <div className={styles.trasancImageBox}>
+                    <Image 
+                        src="/recent-transac.svg"
+                        width={200}
+                        height={200}
+                        alt="Send"
+                        className={styles.transacImage}
+                    /> 
+                    <p>No recent transations</p>
             </div>
-            {transactionsFetched && (transactions.length != 0) ? <Table tableData={tableData(transactions)} />  : <p>Loading...</p>}
+            }
         </section>
         <SendModal 
             isSendClicked={isSendClicked} 
@@ -208,45 +188,4 @@ const FamilyAndFriends = () => {
 }
 
 export default FamilyAndFriends
-
-// const ethers = require("ethers");
-// const lockieABI = require("./lockieAbi.json");
-// const { BigNumber } = require("@ethersproject/bignumber");
-// require("dotenv").config();
-
-// async function main() {
-//     const lockieAddress = "0x4bd5643ac6f66a5237E18bfA7d47cF22f1c9F210";
-//     const provider = new ethers.JsonRpcProvider(
-//         https://eth-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_ETH_GOERLI_KEY}
-//     );
-
-//     const lockieContract = new ethers.Contract(lockieAddress, lockieABI, provider)
-
-//     const userAddress = "0xa2140490Ee061762cB781ad59F16e5268117a846";
-//     const depositFilter = lockieContract.filters.Deposit(null, null, userAddress, null, null);
-//     const withdrawFilter = lockieContract.filters.Withdraw(null, null, userAddress, null);
-
-//     const depositEvents = await lockieContract.queryFilter(depositFilter);
-//     const withdrawEvents = await lockieContract.queryFilter(withdrawFilter);
-
-//     let totalDeposit = BigNumber.from('0');
-//     let totalWithdrawals = BigNumber.from('0');
-
-//     for (let i = 0; i < depositEvents.length; i++) {
-//         let indexedAndNonIndexedData = depositEvents[i].args
-//         totalDeposit = totalDeposit.add(indexedAndNonIndexedData[3])
-//     }
-
-//     for (let i = 0; i < withdrawEvents.length; i++) {
-//         let indexedAndNonIndexedData = depositEvents[i].args
-//         totalWithdrawals = totalWithdrawals.add(indexedAndNonIndexedData[3])
-//     }
-
-//     let currentBalance = totalDeposit.sub(totalWithdrawals);
-
-//     console.log("Total deposit:", totalDeposit.toString())
-//     console.log("Total withdrawals:", totalWithdrawals.toString())
-//     console.log("Current balance:", currentBalance.toString())
-
-// }
 

@@ -78,6 +78,9 @@
 .miscellaneous > .transacSec > .trasancImageBox > .transacImage {
  
 }
+.miscellaneous a {
+    color: rgb(89, 89, 116);
+}
 
 @media only screen and (max-width: 768px) { 
 
