@@ -117,9 +117,9 @@ const FamilyAndFriends = () => {
         } else {
             return subData?.map(({ receipient, amount, transaction }) => (  
                 [   
-                   <span>{formatEther(amount)}</span>,
-                    <span>{receipient}</span>,
-                    <Link href={`https://sepolia.etherscan.io/tx/${transaction}`}>view transaction</Link>,
+                   <span key={amount}>{formatEther(amount)}</span>,
+                    <span key={receipient}>{receipient}</span>,
+                    <Link key={transaction} href={`https://sepolia.etherscan.io/tx/${transaction}`}>view transaction</Link>,
                 ]
            ))
         }
