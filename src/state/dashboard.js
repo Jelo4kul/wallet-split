@@ -146,7 +146,6 @@ function useDashboardData() {
 
 
         setSendState(SendStates.SENDING);
-        console.log(swAddress, _recipient)
         //This is the UserOperation Calldata
         //Set the executor and validator for a specific function selector
         const { hash } = await ecdsaProvider.sendUserOperation({
@@ -174,6 +173,7 @@ function useDashboardData() {
         sendState,
         sendData,
         addFnfState,
+        setSendState,
         setIsSendClicked,
         setIsUpdateFnfClicked,
         closeModal,

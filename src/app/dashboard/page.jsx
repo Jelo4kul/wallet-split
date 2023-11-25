@@ -13,13 +13,10 @@ const Dashboard = () => {
 
     const [isDepositClicked, setisDepositClicked] = useState(false);
     const [isUpdateClicked, setisUpdateClicked] = useState(false);
+    const [isCopied, setIsCopied] = useState(false);
     const { allocations,  balance, address: swAddress  } = useContainer(Global);
     const handleDepositClicked = () => {
-        // if(!isConnected) {
-        //   openConnectModal();
-        // } else {
         setisDepositClicked(true)
-        //}
     };
 
     const handleUpdateClicked = () => {
@@ -40,6 +37,15 @@ const Dashboard = () => {
         setisDepositClicked(false)
         setisUpdateClicked(false)
     }
+
+    const handleCopy = () => {
+        navigator.clipboard.writeText(swAddress);
+        setIsCopied(true);
+        setTimeout(() => {
+            setIsCopied(false);
+        }, 700);
+      }
+    
 
   return (
     <div className={styles.dashboard}>
@@ -126,6 +132,8 @@ const Dashboard = () => {
             handleOverlayClicked={handleOverlayClicked} 
             closeModal={closeModal} 
             swAddress={swAddress} 
+            handleCopy = {handleCopy}
+            isCopied = {isCopied}
         />
         <UpdateModal
             isDepositClicked={isUpdateClicked} 

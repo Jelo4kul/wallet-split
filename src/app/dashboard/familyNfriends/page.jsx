@@ -13,7 +13,7 @@ import Table from '@/components/uicomponents/table';
 import Link from 'next/link';
 import axios from 'axios';
 import { formatEther } from 'viem';
-import { splitAddresses } from '@/utils/utils';
+import {  splitAddressesWith0x } from '@/utils/utils';
 
 
 const FamilyAndFriends = () => {
@@ -22,7 +22,8 @@ const FamilyAndFriends = () => {
     const { allocations, address } = useContainer(Global);
     const [isFnfAddressesUpdated, setIsFnfAddresseUpdated] = useState(false)
     const [transactions, setTransactions] = useState([]);
-    const listOfFnfAddresses = splitAddresses(allocations.fnfAddresses);
+    const listOfFnfAddresses = splitAddressesWith0x(allocations.fnfAddresses);
+    const filteredTransactions  = transactions?.filter(({receipient}) =>  listOfFnfAddresses.includes(receipient.toLowerCase()));
 
     const handleSendClick = () => {
         setIsSendClicked(true);
@@ -62,7 +63,7 @@ const FamilyAndFriends = () => {
         let decTx;
         for (let td of transactionData) {
             //the hexdata(0x1fad948c) below is the function selector of handleOps
-            if ('0x1fad948c' === td.result.input.substring(0, 10)) {
+            if ('0x1fad948c' === td?.result.input.substring(0, 10)) {
                 const iface = new Interface([
                     'function handleOps((address,uint256,bytes,bytes,uint256,uint256,uint256,uint256,uint256,bytes,bytes)[], address)'
                 ])
@@ -110,20 +111,16 @@ const FamilyAndFriends = () => {
     )
 
     const createRows = (subData) => {
-
+        subData = subData.slice().reverse();
         if(subData.length == 0){
             return <p>Loading</p> 
         } else {
-            console.log( subData)
-     
-          //const fArr  = subData?.filter((address) => listOfFnfAddresses.includes(address));
             return subData?.map(({ receipient, amount, transaction }) => (  
                 [   
                    <span>{formatEther(amount)}</span>,
                     <span>{receipient}</span>,
                     <Link href={`https://sepolia.etherscan.io/tx/${transaction}`}>view transaction</Link>,
-            
-                 ]
+                ]
            ))
         }
      
@@ -159,7 +156,7 @@ const FamilyAndFriends = () => {
         </section>
         <section className={styles.transacSec}>
             <p className={styles.recTransacLabel}>Recent Transactions</p>
-            {(transactions.length != 0) ? 
+            {(filteredTransactions.length != 0) ? 
                 <Table tableData={tableData(transactions)} />  
                 : 
                 <div className={styles.trasancImageBox}>

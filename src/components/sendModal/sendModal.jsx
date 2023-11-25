@@ -14,7 +14,15 @@ const MiscTab = ({
     handleInputChange, 
     sendData, 
     handleSendAction, 
-    sendState }) => {
+    sendState,
+    setSendState }) => {
+
+
+    if(sendState == SendStates.SENT) {
+        closeModal();
+        setSendState(SendStates.NOTSENT);
+    }
+
  return (
     <div className={styles.overlay} onClick={handleOverlayClicked}>
         <div className={styles.modal}>
@@ -51,7 +59,7 @@ const MiscTab = ({
                         onChange={handleInputChange}
                     />
                 </div>
-                <button onClick={() => handleSendAction(TabIds.misc)}>{sendState}</button>
+                <button onClick={() => handleSendAction(TabIds.misc)}>{sendState == SendStates.SENDING ? <Spinner /> : sendState}</button>
             </form>
         </div>
     </div>
@@ -66,7 +74,14 @@ const FnFTab = ({
     sendData, 
     handleSendAction, 
     sendState,
-    fnfAddresses }) => {
+    fnfAddresses, 
+    setSendState }) => {
+
+       if(sendState == SendStates.SENT) {
+           closeModal();
+           setSendState(SendStates.NOTSENT);
+       }
+
  return (
     <div className={styles.overlay} onClick={handleOverlayClicked}>
         <div className={styles.modal}>
@@ -117,7 +132,8 @@ const SendModal = ({ isSendClicked, tabId }) => {
             handleInputChange, 
             sendData, 
             handleSendAction, 
-            sendState} = useContainer(DashboardData);
+            sendState,
+            setSendState} = useContainer(DashboardData);
 
             const { allocations } = useContainer(Global);
             const listOfFnfAddresses = splitAddresses(allocations.fnfAddresses)
@@ -130,7 +146,8 @@ const SendModal = ({ isSendClicked, tabId }) => {
                 sendData: sendData,
                 handleSendAction: handleSendAction,
                 sendState: sendState,
-                fnfAddresses: listOfFnfAddresses
+                fnfAddresses: listOfFnfAddresses,
+                setSendState: setSendState
             }
 
             const tabs = [   <FnFTab key={TabIds.fnf} {...properties}/>,  <MiscTab key={TabIds.misc} {...properties}/>   ];

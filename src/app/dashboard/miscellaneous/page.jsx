@@ -12,6 +12,7 @@ import Table from '@/components/uicomponents/table';
 import { BASE_URL, entryPointABI, entryPointAddress, TabIds } from '@/constants/constants';
 import { formatEther } from 'viem';
 import Link from 'next/link';
+import { splitAddressesWith0x } from '@/utils/utils';
 
 
 const Miscellaneous = () => {
@@ -19,6 +20,8 @@ const Miscellaneous = () => {
     const { isSendClicked, setIsSendClicked} = useContainer(DashboardData);
     const { allocations, address } = useContainer(Global);
     const [transactions, setTransactions] = useState([]);
+    const listOfFnfAddresses = splitAddressesWith0x(allocations.fnfAddresses);
+    const filteredTransactions  = transactions?.filter(({receipient}) =>  !listOfFnfAddresses?.includes(receipient.toLowerCase()));
 
     const handleSendClick = () => {
         setIsSendClicked(true);
@@ -52,7 +55,7 @@ const Miscellaneous = () => {
          let decTx;
          for (let td of transactionData) {
              //the hexdata(0x1fad948c) below is the function selector of handleOps
-             if ('0x1fad948c' === td.result.input.substring(0, 10)) {
+             if ('0x1fad948c' === td?.result?.input.substring(0, 10)) {
                  const iface = new Interface([
                      'function handleOps((address,uint256,bytes,bytes,uint256,uint256,uint256,uint256,uint256,bytes,bytes)[], address)'
                  ])
@@ -100,11 +103,11 @@ const Miscellaneous = () => {
      )
  
      const createRows = (subData) => {
- 
+        subData = subData.slice().reverse();
          if(subData.length == 0){
              return <p>Loading</p> 
          } else {
-             console.log( subData)
+            
              return subData?.map(({ receipient, amount, transaction }) => (  
                  [   
                     <span>{formatEther(amount)}</span>,
@@ -116,7 +119,7 @@ const Miscellaneous = () => {
          }
       
       };
-        
+       
   return (
     <div className={styles.miscellaneous}>
         <p className={styles.title}>Miscellaneous</p>
@@ -147,8 +150,10 @@ const Miscellaneous = () => {
         </section>
         <section className={styles.transacSec}>
             <p className={styles.recTransacLabel}>Recent Transactions</p>
-            {(transactions.length != 0) ? 
-                <Table tableData={tableData(transactions)} />  
+            {
+            
+            (filteredTransactions.length != 0) ? 
+                <Table tableData={tableData(filteredTransactions)} />  
                 : 
                 <div className={styles.trasancImageBox}>
                     <Image 

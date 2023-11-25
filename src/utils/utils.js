@@ -9,6 +9,20 @@ export const splitAddresses = (_addresses) => {
     return (addressesWithout0x.match(/[\s\S]{1,40}/g));
 }
 
+//addresses is in this format: 0xdBd899379844d35a1a1f5d51d3185dd821f44dc208c899379844d35a1a1f5d51d3185dd821f44dc3
+//returns an array of addresses with 0x prefix
+export const splitAddressesWith0x = (_addresses) => {
+    const addressesWithout0x = _addresses.substring(2, _addresses.length);
+
+    // Split the hex string into 20-byte chunks
+    const chunks = addressesWithout0x.match(/.{1,40}/g);
+
+    // Add '0x' prefix to each chunk
+    const resultArray = chunks?.map(chunk => '0x' + chunk);
+
+    return resultArray;
+}
+
 //input: ['0xabc', '0xbdf', '0xdft']
 //output: '0xabcbdfdft'
 export const arrToBytes = (_arr) => {
