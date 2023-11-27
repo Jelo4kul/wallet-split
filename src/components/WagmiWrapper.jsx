@@ -5,6 +5,7 @@ import { sepolia } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 import { SocialWalletConnector } from '@zerodev/wagmi';
+import { googleWallet } from '@zerodev/wagmi/rainbowkit';
 import React from 'react';
 import Global from '@/state/global';
 // RainbowKit
@@ -17,9 +18,9 @@ import DashboardData from '@/state/dashboard';
 let socialConnector;
 const WagmiWrapper = ({ children }) => {
 
-
+  const allowedChains = [sepolia]
   const { chains, publicClient, webSocketPublicClient } = configureChains(
-        [sepolia],
+         allowedChains,
         [alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY }), publicProvider()]
   );
 
@@ -29,6 +30,12 @@ const WagmiWrapper = ({ children }) => {
       wallets: [
         metaMaskWallet({ projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID, chains})
       ]
+    },
+    {
+      groupName: 'Social',
+      wallets: [
+        googleWallet({chains, options: { projectId: process.env.NEXT_PUBLIC_PROJECT_ID_SEPOLIA }}),
+      ],
     },
   ])
 

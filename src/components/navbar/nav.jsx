@@ -25,7 +25,6 @@ const NavBar = () => {
     transport,
   })
 
-
   useEffect(() => {
     setLoadingState(true);
     const createWallet = async () => {
