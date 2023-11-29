@@ -6,10 +6,13 @@ import { SplitStates } from '@/constants/constants';
 function useData() {
     const [address, setSmartWalletAddress] = useState('');
     const [balance, setBalance] = useState('');
+    const [web3auth, setWeb3Auth] = useState(null);
+    const [isConnectedTraditionalLogin, setIsConnectedTradLogin] = useState(false);
     const [publicClient, setPublicClient] = useState(null);
     const [reloadSwitch, setNavReload] = useState(false);
     const [loading, setLoading] = useState(false)
     const [isWalletSplitted, setIsWalletSplitted] = useState(false);
+    const [ecdsaprovider, setEcdsaprovider] = useState(null);
     const [allocations, setAllocations] = useState({
         fnf: '0',
         miscellaneous: '0',
@@ -79,7 +82,13 @@ function useData() {
         splitFormState,
         setSplitFormState,
         publicClient,
-        setPublicClient
+        setPublicClient,
+        ecdsaprovider,
+        setEcdsaprovider,
+        isConnectedTraditionalLogin,
+        setIsConnectedTradLogin,
+        web3auth,
+        setWeb3Auth
     };
 }
 

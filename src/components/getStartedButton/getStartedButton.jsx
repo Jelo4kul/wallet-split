@@ -6,7 +6,7 @@ import { createPublicClient, http } from 'viem';
 import { useRouter } from 'next/navigation';
 import styles from './getStartedButton.module.css';
 
-const GetStartedButton = ({ isConnected }) => {
+const GetStartedButton = ({ isConnected, isConnectedTraditionalLogin }) => {
 
     const router = useRouter();
     const transport = http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`);
@@ -20,8 +20,8 @@ const GetStartedButton = ({ isConnected }) => {
     
 
     const handleClick = async () => {
-       
-        if(isConnected) {
+       console.log('jamamaama', isConnectedTraditionalLogin)
+        if(isConnected || isConnectedTraditionalLogin) {
             //if it's a new smart wallet
             if(allocations.fnf == 0 && allocations.miscellaneous==0 && allocations.nfts == 0) {
                 assignIsWalletSplitted(false);

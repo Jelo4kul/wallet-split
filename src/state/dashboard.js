@@ -20,7 +20,7 @@ function useDashboardData() {
     })
 
 
-    const { address: swAddress, reloadSwitch, triggerNavReload, publicClient, setAllocationData } = useContainer(Global);
+    const { address: swAddress, reloadSwitch, triggerNavReload, publicClient, setAllocationData, isConnectedTraditionalLogin, web3auth } = useContainer(Global);
 
 
     const handleOverlayClicked = (event) => {
@@ -55,7 +55,7 @@ function useDashboardData() {
 
     const setEnable = async () => {
         //TODO: Split wallet can't be called before creating a wallet
-        const owner = getRPCProviderOwner(window.ethereum);
+        let owner = isConnectedTraditionalLogin ? getRPCProviderOwner(web3auth.provider) : getRPCProviderOwner(window.ethereum);
         const delimiter = /[\s,]+/;
         const familyNfrens = sendData.fnfAddresses?.split(delimiter);
         const allAddresesValid = familyNfrens.every(addr => isAddress(addr));
@@ -132,9 +132,10 @@ function useDashboardData() {
 
     const makeTransfer = async (_recipient, _amount, _data) => {
         //Set the AA wallet to plugin mode
+        let owner = isConnectedTraditionalLogin ? getRPCProviderOwner(web3auth.provider) : getRPCProviderOwner(window.ethereum);
         let ecdsaProvider = await ECDSAProvider.init({
             projectId: process.env.NEXT_PUBLIC_PROJECT_ID_SEPOLIA,
-            owner: getRPCProviderOwner(window.ethereum),
+            owner: owner,
             opts: {
                 validatorConfig: {
                     mode: ValidatorMode.plugin,

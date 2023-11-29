@@ -13,12 +13,12 @@ import Spinner from '../spinner/spinner';
 
 const SplitForm = ({ splitState, style}) => {
 
-    const {address, balance, splitFormState, setSplitFormState, setAllocationData} = useContainer(Global)
+    const {address, balance, splitFormState, setSplitFormState, setAllocationData, web3auth, isConnectedTraditionalLogin} = useContainer(Global)
 
       const setExecution = async () => {
             //TODO: Split wallet can't be called before creating a wallet
-    
-            const owner = getRPCProviderOwner(window.ethereum);
+            let owner = isConnectedTraditionalLogin ? getRPCProviderOwner(web3auth.provider) : getRPCProviderOwner(window.ethereum);
+             
             const delimiter = /[\s,]+/;
     
     
@@ -34,9 +34,9 @@ const SplitForm = ({ splitState, style}) => {
             if(!allAddresesValid){
                 throw new Error("Invalid Address")
             }
-    
+            console.log(isConnectedTraditionalLogin, owner)
             const cardObject = {
-            ownerAddress: await owner.getAddress(),
+            ownerAddress:  await owner.getAddress(),
             openseaAddress: openseaAddress,
             familyNFrenAlloc: parseEther(splitFormState.formData.fnf).toString(16).padStart(64, '0'),
             nftAlloc: parseEther(splitFormState.formData.nfts).toString(16).padStart(64, '0'),

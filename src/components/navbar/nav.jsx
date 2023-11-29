@@ -14,11 +14,13 @@ import { createPublicClient, formatEther, http } from 'viem';
 import { validatorABI, validatorAddress } from '@/constants/constants';
 
 
+
+
 const NavBar = () => {
 
   const { address, isConnected } = useAccount();
   const pathname = usePathname();
-  const { saveSmartWalletAddress, setLoadingState, loading, saveBalance, balance, address: swAddress, setAllocationData, reloadSwitch, setPublicClient } = useContainer(Global);
+  const { web3auth, isConnectedTraditionalLogin, saveSmartWalletAddress, setLoadingState, loading, saveBalance, balance, address: swAddress, setAllocationData, reloadSwitch, setPublicClient } = useContainer(Global);
   const transport = http(`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`)
   const publicClient = createPublicClient({
     chain: sepolia,
@@ -27,12 +29,27 @@ const NavBar = () => {
 
   useEffect(() => {
     setLoadingState(true);
+
     const createWallet = async () => {
       try {
-        const ecdsaProvider = await ECDSAProvider.init({
-        projectId: process.env.NEXT_PUBLIC_PROJECT_ID_SEPOLIA,
-        owner: getRPCProviderOwner(window.ethereum),
-        })
+        // if(!swAddress){
+
+        // }
+        console.log(isConnected, isConnectedTraditionalLogin);
+        let ecdsaProvider;
+        if(isConnected){
+           ecdsaProvider = await ECDSAProvider.init({
+            projectId: process.env.NEXT_PUBLIC_PROJECT_ID_SEPOLIA,
+            owner: getRPCProviderOwner(window.ethereum),
+          })
+        } else if(isConnectedTraditionalLogin){
+           ecdsaProvider = await ECDSAProvider.init({
+            projectId: process.env.NEXT_PUBLIC_PROJECT_ID_SEPOLIA,
+            owner: getRPCProviderOwner(web3auth.provider),
+          })
+        }
+ 
+
         const swAddress = await ecdsaProvider.getAddress()
         const bal = await publicClient.getBalance({address: swAddress});
         const allocs = await publicClient.readContract({
@@ -40,8 +57,7 @@ const NavBar = () => {
           abi: validatorABI,
           functionName: 'getAllocations',
           args: [swAddress]
-      })
-      console.log("NAV",allocs)
+        })
 
         saveBalance(formatEther(bal+'')); 
         saveSmartWalletAddress(swAddress);
@@ -53,24 +69,30 @@ const NavBar = () => {
               miscellaneous: formatEther(allocs[4]),
               fnfAddresses: allocs[5],
           }
-      )
+        )
     
         setLoadingState(false)
+
+        
       } catch(error) {
         console.log(error)
       }
     }
+
+
     createWallet();
+    console.log('jaaaaammmmmmesssssss', swAddress)
  
-  }, [address, reloadSwitch])
+  }, [address, reloadSwitch, isConnectedTraditionalLogin])
   
 
 
   const paths = {
-    "/":  <GetStartedButton isConnected={isConnected} />,
+    "/":  <GetStartedButton isConnected={isConnected} isConnectedTraditionalLogin={isConnectedTraditionalLogin}/>,
     "/createWallet": <button>Create Wallet</button>
   }
 
+  //if the left operand is null, return CustomRainbowkitBtn component
   const btnText = paths[pathname] ?? <CustomRainbowkitBtn 
     swAddress={loading ? "loading..." : swAddress}
     balance={balance}  

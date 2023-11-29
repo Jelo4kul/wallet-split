@@ -21,6 +21,13 @@
     text-align: center;
 } 
 
+.walletCreation .wallletCreationEmail {
+    background-color: white;
+    color: black;
+    border: 1px solid wheat;
+    margin-top: 18px;
+}
+
 @media only screen and (max-width: 768px) {
     .walletCreation {
         text-align: center;

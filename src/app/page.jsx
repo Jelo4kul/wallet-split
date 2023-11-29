@@ -4,11 +4,14 @@ import Image from 'next/image'
 import styles from './page.module.css';
 import {  useAccount  } from 'wagmi';
 import GetStartedButton from '@/components/getStartedButton/getStartedButton';
+import { useContainer } from 'unstated-next';
+import Global from '@/state/global';
 
 
 export default function Home() {
 
   const {  isConnected } = useAccount();
+  const {  isConnectedTraditionalLogin } = useContainer(Global);
 
 
  return (
@@ -16,7 +19,7 @@ export default function Home() {
      <section className={styles.Home_Left}>
         <h1>Manage your wallets better</h1>
         <p className={styles.sub_heading}>Split your wallet into mini sub-wallets and allocate a portion of your entire balance for each sub-wallet</p> 
-        <GetStartedButton isConnected={isConnected} />
+        <GetStartedButton isConnected={isConnected} isConnectedTraditionalLogin={isConnectedTraditionalLogin} />
         <div></div>
      </section>
      <section className={styles.Home_Right}>

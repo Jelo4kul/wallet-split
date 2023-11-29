@@ -20,7 +20,7 @@ const WalletSplit = () => {
   const [isClient, setIsClient] = useState(false)
   const [isCopied, setIsCopied] = useState(false);
   const [isDepositClicked, setisDepositClicked] = useState(false)
-  const { isWalletSplitted, assignIsWalletSplitted, address: swAddress, balance, saveBalance, setSplitFormState, splitFormState, publicClient } = useContainer(Global);
+  const { isWalletSplitted, assignIsWalletSplitted, address: swAddress, balance, saveBalance, setSplitFormState, splitFormState, publicClient, isConnectedTraditionalLogin } = useContainer(Global);
   const router = useRouter();
   const { openConnectModal } = useConnectModal();
  const { isConnected } = useAccount();
@@ -56,7 +56,8 @@ const WalletSplit = () => {
   }, [swAddress]);
 
   const handleDepositClicked = () => {
-      if(!isConnected) {
+      if(!isConnected && !isConnectedTraditionalLogin) {
+          //true logic should be to open a modal that lets the user choose between web3 and web2
         openConnectModal();
       } else {
         setisDepositClicked(true)

@@ -5,6 +5,7 @@ import { sepolia } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 import { SocialWalletConnector } from '@zerodev/wagmi';
+import { Web3AuthConnector } from "@web3auth/web3auth-wagmi-connector";
 import { googleWallet } from '@zerodev/wagmi/rainbowkit';
 import React from 'react';
 import Global from '@/state/global';
@@ -15,7 +16,11 @@ import {
 } from '@rainbow-me/rainbowkit/wallets';
 import DashboardData from '@/state/dashboard';
 
+//import { InjectedConnector, } from '@wagmi/core';
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 let socialConnector;
+
+
 const WagmiWrapper = ({ children }) => {
 
   const allowedChains = [sepolia]
@@ -28,15 +33,15 @@ const WagmiWrapper = ({ children }) => {
     {
       groupName: "EOA",
       wallets: [
-        metaMaskWallet({ projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID, chains})
+        metaMaskWallet({ projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID, chains}),
       ]
     },
-    {
-      groupName: 'Social',
-      wallets: [
-        googleWallet({chains, options: { projectId: process.env.NEXT_PUBLIC_PROJECT_ID_SEPOLIA }}),
-      ],
-    },
+    // {
+    //   groupName: 'Social',
+    //   wallets: [
+    //     googleWallet({chains, options: { projectId: process.env.NEXT_PUBLIC_PROJECT_ID_SEPOLIA }}),
+    //   ],
+    // },
   ])
 
   const config = createConfig({
@@ -57,7 +62,7 @@ const WagmiWrapper = ({ children }) => {
     // Wrap in global state provider (at layout level)
     <Global.Provider>
       <DashboardData.Provider>
-        <WagmiConfig config={config}>
+        <WagmiConfig  config={config}>
           <RainbowKitProvider chains={chains} modalSize={'compact'}>
           {children}
           </RainbowKitProvider>
